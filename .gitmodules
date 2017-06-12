@@ -52,3 +52,6 @@
 [submodule "jforum"]
 	path = jforum
 	url = https://github.com/etudes-inc/etudes-jforum.git
+[submodule "lamcSelector"]
+	path = lamcSelector
+	url = https://github.com/etudes-inc/etudes-lamcSelector.git
