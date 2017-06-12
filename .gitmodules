@@ -34,3 +34,6 @@
 [submodule "e3"]
 	path = e3
 	url = https://github.com/etudes-inc/etudes-e3.git
+[submodule "eCollegeSelector"]
+	path = eCollegeSelector
+	url = https://github.com/etudes-inc/etudes-eCollegeSelector.git
