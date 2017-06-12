@@ -37,3 +37,6 @@
 [submodule "eCollegeSelector"]
 	path = eCollegeSelector
 	url = https://github.com/etudes-inc/etudes-eCollegeSelector.git
+[submodule "etudes-util"]
+	path = etudes-util
+	url = https://github.com/etudes-inc/etudes-util.git
