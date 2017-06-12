@@ -46,3 +46,6 @@
 [submodule "gb"]
 	path = gb
 	url = https://github.com/etudes-inc/etudes-gradebook.git
+[submodule "homepage"]
+	path = homepage
+	url = https://github.com/etudes-inc/etudes-homepage.git
