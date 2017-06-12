@@ -67,3 +67,6 @@
 [submodule "mysites"]
 	path = mysites
 	url = https://github.com/etudes-inc/etudes-mysites.git
+[submodule "preferences"]
+	path = preferences
+	url = https://github.com/etudes-inc/etudes-preferences.git
