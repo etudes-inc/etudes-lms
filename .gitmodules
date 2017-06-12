@@ -10,3 +10,6 @@
 [submodule "ambrosia"]
 	path = ambrosia
 	url = https://github.com/etudes-inc/etudes-ambrosia.git
+[submodule "archives"]
+	path = archives
+	url = https://github.com/etudes-inc/etudes-archives.git
