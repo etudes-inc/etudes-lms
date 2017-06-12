@@ -55,3 +55,6 @@
 [submodule "lamcSelector"]
 	path = lamcSelector
 	url = https://github.com/etudes-inc/etudes-lamcSelector.git
+[submodule "ltiContact"]
+	path = ltiContact
+	url = https://github.com/etudes-inc/etudes-ltiContact.git
