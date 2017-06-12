@@ -7,3 +7,6 @@
 [submodule "admin"]
 	path = admin
 	url = https://github.com/etudes-inc/etudes-admin.git
+[submodule "ambrosia"]
+	path = ambrosia
+	url = https://github.com/etudes-inc/etudes-ambrosia.git
