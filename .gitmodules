@@ -4,3 +4,6 @@
 [submodule "activitymeter"]
 	path = activitymeter
 	url = https://github.com/etudes-inc/etudes-activitymeter.git
+[submodule "admin"]
+	path = admin
+	url = https://github.com/etudes-inc/etudes-admin.git
