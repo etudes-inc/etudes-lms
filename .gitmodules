@@ -82,3 +82,6 @@
 [submodule "siteimport"]
 	path = siteimport
 	url = https://github.com/etudes-inc/etudes-siteimport.git
+[submodule "siteroster"]
+	path = siteroster
+	url = https://github.com/etudes-inc/etudes-siteroster.git
