@@ -58,3 +58,6 @@
 [submodule "ltiContact"]
 	path = ltiContact
 	url = https://github.com/etudes-inc/etudes-ltiContact.git
+[submodule "melete"]
+	path = melete
+	url = https://github.com/etudes-inc/etudes-melete.git
