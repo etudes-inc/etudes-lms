@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**********************************************************************************
+ * $URL: https://source.etudes.org/svn/etudes/source/trunk/calendar/calendar-tool/tool/pom.xml $
+ * $Id: pom.xml 4379 2013-02-14 01:10:01Z ggolden $
+ ***********************************************************************************
+ *
+ * Copyright (c) 2013 Etudes, Inc.
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ **********************************************************************************/
+-->
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	
+	<parent>
+		<groupId>org.sakaiproject</groupId>
+		<artifactId>master</artifactId>
+		<version>final</version>
+		<relativePath />
+	</parent>
+
+	<groupId>org.sakaiproject</groupId>
+	<artifactId>sakai-calendar-tool</artifactId>
+	<version>2.3.x</version>
+
+	<packaging>war</packaging>
+    
+	<dependencies>
+	
+		<dependency>
+			<groupId>org.sakaiproject</groupId>
+			<artifactId>sakai-velocity-tool-api</artifactId>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.sakaiproject</groupId>
+			<artifactId>sakai-component-api</artifactId>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.sakaiproject</groupId>
+			<artifactId>sakai-velocity-tool</artifactId>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.sakaiproject</groupId>
+			<artifactId>sakai-authz-api</artifactId>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.sakaiproject</groupId>
+			<artifactId>sakai-calendar-api</artifactId>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.sakaiproject</groupId>
+			<artifactId>sakai-content-api</artifactId>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.sakaiproject</groupId>
+			<artifactId>sakai-entity-api</artifactId>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.sakaiproject</groupId>
+			<artifactId>sakai-event-api</artifactId>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.sakaiproject</groupId>
+			<artifactId>sakai-site-api</artifactId>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.sakaiproject</groupId>
+			<artifactId>sakai-user-api</artifactId>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.sakaiproject</groupId>
+			<artifactId>sakai-util-api</artifactId>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.sakaiproject</groupId>
+			<artifactId>sakai-tool-api</artifactId>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.sakaiproject</groupId>
+			<artifactId>sakai-mergedlist-util</artifactId>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.sakaiproject</groupId>
+			<artifactId>sakai-calendar-util</artifactId>
+			<version>${sakai.version}</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.sakaiproject</groupId>
+			<artifactId>sakai-util</artifactId>
+		</dependency>
+		
+		<dependency>
+			<groupId>commons-logging</groupId>
+			<artifactId>commons-logging</artifactId>
+		</dependency>
+		
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>servlet-api</artifactId>
+		</dependency>
+		
+		<!-- velocity and dependencies (logkit, oro, collections) -->
+		<dependency>
+			<groupId>velocity</groupId>
+			<artifactId>velocity</artifactId>
+		</dependency>
+		
+		<dependency>
+			<groupId>logkit</groupId>
+			<artifactId>logkit</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.etudes</groupId>
+			<artifactId>etudes-util</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>oro</groupId>
+			<artifactId>oro</artifactId>
+		</dependency>
+
+	</dependencies>
+
+</project>

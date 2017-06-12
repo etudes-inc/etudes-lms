@@ -1,0 +1,22 @@
+##<!-- $Header: /cvs/sakai2/legacy/tools/src/webapp/vm/sitesetup/chef_site-addParticipant-confirm.vm,v 1.2 2005/05/28 03:04:36 ggolden.umich.edu Exp $ -->
+## Confirming a participant to the site
+<div class ="portletBody">
+	<h3>
+		$tlang.getString("addemailconf.confirming") $validator.escapeHtml($title)
+	</h3>
+	<div class="alertMessage">$tlang.getString("gen.alert") $validator.escapeHtml($tlang.getString("addemailconf.finish"))</div>
+	
+	<form action="#toolForm("SiteAction")" method="post">
+		<ul class="attachList indnt2">
+			#foreach ($participant in $notifyList)
+				<li>
+					$participant					
+				</li>
+			#end
+		</ul>	
+		<input type="hidden" name="template-index" value="55" />
+		<p class ="act">
+			<input type="submit" accesskey="s" class="active" name="eventSubmit_doReturn" value="$tlang.getString('gen.return')" />			
+		</p>
+	</form>
+</div>

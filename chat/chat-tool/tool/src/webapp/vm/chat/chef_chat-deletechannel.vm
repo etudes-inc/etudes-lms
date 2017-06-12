@@ -1,0 +1,28 @@
+## $Header: /cvs/sakai2/legacy/tools/src/webapp/vm/chat/chef_chat-deletechannel.vm,v 1.1 2005/04/14 20:22:08 ggolden.umich.edu Exp $
+<div class="portletBody">
+	<h3>
+		$tlang.getString("deleteroom.delete")
+	</h3>
+	#if ($alertMessage)<div class="alertMessage">$tlang.getString("gen.alert") $validator.escapeHtml($alertMessage)</div>
+	<div class="clear"></div>#end
+	<div class="alertMessage" style="clear:both">$tlang.getString("deleteroom.sure")</div>
+	<div class="clear"></div>
+	<form name="deleteChannelForm" action="#toolForm("$action")" method="post">
+	     #foreach ($channel in $delete_channels)
+				<p class="indnt1">
+					$validator.escapeHtmlFormattedText($channel)
+				</p>
+		 #end		
+		<p class="act">
+			<input type="submit" accesskey="l" class="active" name="eventSubmit_doDeleteChannel" 
+			style="padding-left:2em;background: #eee url('/sakai-chat-tool/images/delete.png') .2em no-repeat;"
+			value="$tlang.getString("gen.delete")" title="$tlang.getString("gen.delete")[Accesskey + l]"/>
+			
+			<input type="submit" accesskey="x" 
+			style="padding-left:2em;background: #eee url('/sakai-chat-tool/images/cancel.gif') .2em no-repeat;"
+			title="$tlang.getString("gen.cancel")[Accesskey + x]"
+			value="$tlang.getString("gen.cancel")" name="eventSubmit_doCancelManage" />
+		</p>
+	</form>
+</div>
+

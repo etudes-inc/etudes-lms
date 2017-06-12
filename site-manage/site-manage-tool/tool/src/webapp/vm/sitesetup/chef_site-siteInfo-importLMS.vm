@@ -1,0 +1,149 @@
+##<!-- $Header: /cvs/sakai2/legacy/tools/src/webapp/vm/sitesetup/chef_site-importLMS.vm,v 1.3 2005/05/25 20:24:30 zqian.umich.edu Exp $ -->
+<div class="portletBody">
+	<h3>
+		$tlang.getString("import.lms")
+	</h3>
+	<p class="instruction"> 
+		$tlang.getString("import.lmsinst") 
+	</p>	
+	<script>
+	 function openSelector()
+		{			
+			var _info = navigator.userAgent;
+			var _ie = (_info.indexOf("MSIE") > 0 && _info.indexOf("Win") > 0 && _info.indexOf("Windows 3.1") < 0);
+			var windowDefaults = "status=no, menubar=no, location=no, scrollbars=yes, resizeable=yes, width=400, height=400, left=20, top=20";
+			var newWindow;
+			if(!_ie) newWindow = window.open('$eCollegeFileOpener','Select file',windowDefaults);
+			else newWindow = window.open('$eCollegeFileOpener',null,windowDefaults);
+			if (window.focus) { newWindow.focus(); } ; // force the window to the front if the browser supports it
+			return newWindow;		
+		}
+		
+	 function showRepair()
+	 {
+	 	document.getElementById('eCollegeSelect').style.visibility='visible';
+	 	document.getElementById('eCollegeSelect').style.display='block';
+	
+	 	document.getElementById('fileSelect').style.visibility='hidden';
+	 	document.getElementById('fileSelect').style.display='none';
+	 	
+	 	document.getElementById('lamcSelect').style.visibility='hidden';
+	 	document.getElementById('lamcSelect').style.display='none';
+	 }
+	 
+	 function openFileInput()
+	 {
+	 	document.getElementById('fileSelect').style.visibility='visible';
+	 	document.getElementById('fileSelect').style.display='block';
+	 	
+	 	document.getElementById('eCollegeSelect').style.visibility='hidden';
+	 	document.getElementById('eCollegeSelect').style.display='none';
+	 	
+	 	document.getElementById('lamcSelect').style.visibility='hidden';
+	 	document.getElementById('lamcSelect').style.display='none';
+	 }
+	 
+	 function openLAMCSelector()
+	    {			
+		var _info = navigator.userAgent;
+		var _ie = (_info.indexOf("MSIE") > 0 && _info.indexOf("Win") > 0 && _info.indexOf("Windows 3.1") < 0);
+		var windowDefaults = "status=no, menubar=no, location=no, scrollbars=yes, resizeable=yes, width=650, height=500, left=20, top=20";
+		var newWindow;
+		if(!_ie) newWindow = window.open('$lamcFileOpener','Select file',windowDefaults);
+		else newWindow = window.open('$lamcFileOpener',null,windowDefaults);
+		if (window.focus) { newWindow.focus(); } ; // force the window to the front if the browser supports it
+		return newWindow;		
+		}
+		
+	 function showLAMCButton()
+	 {
+	 	document.getElementById('lamcSelect').style.visibility='visible';
+	 	document.getElementById('lamcSelect').style.display='block';
+	 	
+	 	document.getElementById('eCollegeSelect').style.visibility='hidden';
+	 	document.getElementById('eCollegeSelect').style.display='none';
+	 	
+	 	document.getElementById('fileSelect').style.visibility='hidden';
+	 	document.getElementById('fileSelect').style.display='none';
+	 }
+	</script>
+	<form name="importLMSForm" action="#toolForm("$action")" method="post" enctype="multipart/form-data">
+	<script>var f = document.forms['importLMSForm'];
+			var faction=f.action;
+			faction=(faction.indexOf('?')>-1?faction+'&':faction+'?');
+			faction=faction+'upload.max=' + '$uploadMax';
+			f.action=faction;
+	</script>
+	#if ($alertMessage)<div class="alertMessage">$tlang.getString("gen.alert") $validator.escapeHtml($alertMessage)</div>#end
+	
+	<h4> 
+		$tlang.getString("import.lmschoice") 
+	</h4>
+	<p class="checkbox">	
+			<input type="radio" id="bboard" name="lmschoice" value="blackboard" checked="true" onclick="openFileInput()"/>
+				<label for="bboard_choice">
+				$tlang.getString("bboard.choice")
+			</label>
+	</p>		
+	<p class="checkbox">
+			<input type="radio" id="ecollege" name="lmschoice" value="eCollege" onclick="showRepair()"/>
+				<label for="ecollege_choice">
+				$tlang.getString("ecollege.choice")
+			</label>
+	</p>	
+	<p class="checkbox">
+			<input type="radio" id="moodle" name="lmschoice" value="moodle"  onclick="openFileInput()"/>
+			<label for="moodle_choice">
+				$tlang.getString("moodle.choice")
+			</label>
+	</p>	
+	<p class="checkbox">	
+			<input type="radio" id="2moodle" name="lmschoice" value="2moodle" onclick="openFileInput()"/>
+			<label for="moodle2_choice">
+				$tlang.getString("moodle2.choice")
+			</label>
+	</p>	
+	<p class="checkbox">
+			<input type="radio" id="moodleLAMC" name="lmschoice" value="moodleLAMC" onclick="showLAMCButton()"/>
+				<label for="moodleLAMC.choice">
+				$tlang.getString("moodleLAMC.choice")
+			</label>
+	</p>	
+			
+		<div id="fileSelect" class="shorttext">
+			<h4>$tlang.getString("import.lmsFile")</h4>
+				<label for="file1">$tlang.getString("import.getFile")</label>
+				<input type="file" name="file1" id="file" class="upload" />
+			</div>	
+		<div id="lamcSelect" class="shorttext"style="visibility:hidden;display:none;">
+		  <h4>$tlang.getString("import.lmsServerFile")</h4>
+		  <label for="selectedmoodlefile">$tlang.getString("import.getFile")</label>
+		  <input type="text" id="selectedmoodlefile" name="selectedmoodlefile" />	 	
+		  <input type="button" value="LAMC File" onclick="javascript:openLAMCSelector()" />
+		 </div> 	
+		 
+		<div id="eCollegeSelect" class="shorttext"style="visibility:hidden;display:none;">
+		  <h4>$tlang.getString("import.lmsServerFile")</h4>
+		  <label for="selectedfile">$tlang.getString("import.getFile")</label>
+		  <input type="text" id="selectedfile" name="selectedfile" />	 	
+		  <input type="button" value="Hartnell File" onclick="javascript:openSelector()" />
+		  <br/>
+		  <h4>$tlang.getString("import.lmsLocalECollegeHeaderFile")</h4>
+		  <label for="file2">$tlang.getString("import.lmsLocalECollegeFile")</label>
+		  <input type="file" name="file2" id="file" class="upload" />
+		 </div> 	
+		 
+		<input type="hidden" name="template-index" value="57" />
+		<p class="act" id="actPanel">
+			<input type="submit" accesskey="s"  class="active" name="eventSubmit_doContinue" value="$tlang.getString("import.continue")"  onclick="javascript:document.getElementById('processMsg').style.visibility='visible';document.getElementById('actPanel').style.visibility='hidden';" />
+			<input type="submit" accesskey="x"  name="eventSubmit_doCancel" value="$tlang.getString("import.cancel")" />
+		</p>	
+		<div id="processMsg" style="visibility:hidden"><p style="color:orange;font-size:14px;font-weight:bold;">$tlang.getString("import.processing")</p></div>
+		
+		#if ($successMessage)
+		<div class="success">$successMessage </div>		
+        <br>
+	#end		
+
+	</form>
+</div>

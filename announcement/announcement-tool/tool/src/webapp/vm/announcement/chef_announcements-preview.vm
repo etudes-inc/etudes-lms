@@ -1,0 +1,53 @@
+## $Header: /cvs/sakai2/legacy/tools/src/webapp/vm/announcement/chef_announcements-preview.vm,v 1.4 2005/05/15 04:54:19 gsilver.umich.edu Exp $
+<div class="portletBody">
+		<p class="shorttext">
+			<img src="/sakai-announcement-tool/images/preview.png" border="0" height="16" width="16" />
+			$tlang.getString("pre.preview")
+		</p>
+	#if ($alertMessage)<div class="alertMessage">$tlang.getString("gen.alert") $validator.escapeHtml($alertMessage)</div>#end
+	<table cellspacing="0" class="itemSummary indnt1" summary="">
+		<tr>
+			<th>$tlang.getString("gen.subject")</th>
+			<td>$validator.escapeHtml($subject)</td>
+		</tr>		
+	</table>
+	<h4 class="indnt1">
+		$tlang.getString("meta.message")
+	</h4>
+	<p class="indnt1">$body</p>
+	#set ($size = 0)
+	#if (!$attachments.isEmpty())
+		<h4 class="indnt1">$tlang.getString("meta.attach")</h4>
+		#set ($props = false)
+		#set ($size =  $attachments.size())
+		<ul class="attachList indnt2" >
+			#foreach ($attachment in $attachments)
+				#set ($props = $attachment.Properties)
+				#if (!$props)
+					#if ($size > 0) #set ($size = $size - 1) #end
+				#else
+					#if ($props.getBooleanProperty($props.NamePropIsCollection))
+					<li><img src = "#imageLink($contentTypeImageService.getContentTypeImage("folder"))" border="0" />
+					#else
+					<li><img src = "#imageLink($contentTypeImageService.getContentTypeImage($props.getProperty($props.NamePropContentType)))" border="0"  alt ="$props.getProperty($props.NamePropContentType)" />
+					#end
+					<a class="toolUiLinkU" href="$attachment.Url" target="_blank" title="$tlang.getString("gen.newwindow")">
+					  $validator.escapeHtml($attachment.Properties.getPropertyFormatted("DAV:displayname"))</a>
+					#if (!$props.getBooleanProperty($props.NamePropIsCollection))
+					  ($props.getPropertyFormatted($props.NamePropContentLength))
+					#end
+					</li>
+				#end
+				#set ($props = false)
+			#end
+		</ul>
+	#end
+	<form name="form2" method="post" action="#toolForm("AnnouncementAction")">
+		<p style="background: #EEEEEE;border: 0;margin: 5px 0 5px 0;line-height: 2em;padding-left: 1em;">		 
+			<input type="submit" accesskey="r" title="$tlang.getString("gen.return")[AccessKey + r]"
+			style="padding-left:2em;background: #eee url('/sakai-announcement-tool/images/return_sm.png') .2em no-repeat;"
+			name="eventSubmit_doPreviewrevise" value="$tlang.getString("gen.return")" />			
+		</p>
+	</form>	
+</div>
+

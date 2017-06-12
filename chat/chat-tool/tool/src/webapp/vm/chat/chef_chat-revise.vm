@@ -1,0 +1,155 @@
+## $Header: /cvs/sakai2/legacy/tools/src/webapp/vm/chat/chef_chat-revise.vm,v 1.3 2005/05/23 16:04:03 gsilver.umich.edu Exp $
+## chef_chat-revise.vm, use with org.chefproject.ChatAction.java
+##     context: $chat_channel: String channel name
+##              $chat_ascending: Ascending flag
+##              $chat_channels: List of potential channel ids
+##              $chat_channel_form: form name for selected channel
+##				$new_chat_channel: 
+##              $chat_ascending_form: form name for ascending field
+##              $action: action= value
+##              $form-submit: submit button name
+##
+<script language="JavaScript" type="text/JavaScript">
+<!--
+		function toggleSelectAll(caller, elementName)
+		{
+			var newValue = caller.checked;
+			var elements = document.getElementsByName(elementName);
+			
+			if(elements)
+			{
+				for(var i = 0; i < elements.length; i++)
+				{
+					elements[i].checked = newValue;
+				}
+			}
+		}
+	-->
+</script>	
+<style type="text/css">
+.e3_dialog_instructions
+{
+	font-size: 13px;
+	color: #656565;
+	margin-left: 12px;
+	margin-bottom: 18px;
+}
+.e3_wide
+{
+	width: 600px;
+}
+</style>
+<iframe
+	name="$validator.escapeJavascript("$panel-toolbar")"
+	id="$validator.escapeJavascript("$panel-toolbar")"
+	title="$panel-toolbar"
+	width="100%"
+style="line-height:1.7em;height:5em;margin-top:-1px"
+	frameborder="0"
+	marginwidth="0"
+	marginheight="0"
+	scrolling="no"
+	align="left"
+	src="#contentCourierLink("$panel-toolbar")">
+</iframe>
+<div class="portletBody">
+	  <input type="image" id="chat-add-img" src="/sakai-chat-tool/images/document_add.gif" height="16" width="16" style="border:0" alt=""  title="" />
+				#if ($editing.equals(""))
+				  $tlang.getString("add.chat")
+				#else
+				  $tlang.getString("edit.chat")
+				#end
+	  <br><br>
+	  #if ($!chat_channel.equals($!edit_chat_channel))
+	  <div class="e3_dialog_instructions e3_wide">$tlang.getString("edit.defchannelmsg")</div>
+	  #end
+		#if ($alertMessage)<div class="alertMessage">$tlang.getString("gen.alert") $validator.escapeHtml($alertMessage)</div><div class="clear"></div>#end
+		<form name="reviseForm" id="reviseForm" action="#toolForm("$action")" method="post">
+		<p class="shorttext">
+			<label for="roomtitle">
+			    <span class="reqStar">*</span>$tlang.getString("add.roomtitle")	
+			</label>
+			<input 
+				type="text"
+				class="indnt2"
+				name="$form_new_channel" 
+				id="$form_new_channel" 
+				value="$test_chat_channel"
+				size="30" />
+		</p>		
+				<input type="hidden" name="chat_channel" value="$chat_channel" />
+     
+        #if ($!groups || ($!groups.size()>1)) #set ($show_group = "true") 
+        #else #set ($show_group = "false") 
+        #end
+        #if ($!chat_channel.equals($!edit_chat_channel))
+          #set ($show_group = "false")
+        #end
+		#if ($show_group =="false")
+			## no show this selection, but set default to site
+			<input type="hidden" name="announceTo" id="site" value="site" checked="checked" />
+		#else
+				<p class="checkbox">
+					<input type="radio" name="announceTo" id="site" value="site" #if($!announceTo == "site" || $!channel.ChatHeader.Access == $channelAccess)checked="checked"#end onclick="document.getElementById('groupTable').style.display = 'none';" onkeypress="document.getElementById('groupTable').style.display = 'none';" />
+					<label for="site">$tlang.getString("displayto.site")</label>
+				</p>	
+		
+			#if ($!groups)
+				## added group awareness
+				<p class="checkbox">
+					<input type="radio" name="announceTo" id="groups" value="groups" #if($!announceTo == "groups" || $!channel.ChatHeader.Access == $groupAccess)checked="checked"#end onclick="document.getElementById('groupTable').style.display = 'block';document.getElementById('groupTable').style.width = '80%';" onkeypress="document.getElementById('groupTable').style.display = 'block';" />
+					<label for="groups">$tlang.getString("displayto.selected")</label>
+				</p>	
+				#if($!announceTo == "groups" || $!channel.ChatHeader.Access == $groupAccess)
+					#set ($listDisplay="block")
+				#else
+					#set ($listDisplay="none")
+				#end
+					<table id="groupTable" style="width:80%;display:$listDisplay" class="listHier lines indnt3" border="0" cellspacing="0" summary="$tlang.getString("revise.group.list.summary")">
+					<caption class="skip" style="display:none">$tlang.getString("displayto.selected")</caption>
+						<tr>
+							<th id ="selectAllGroups" class="attach">
+								<input type="checkbox" name="selectall" value="" id="selectall" title="toggle select all" onclick="javascript:toggleSelectAll(this, 'selectedGroups')" onkeypress="javascript:toggleSelectAll(this, 'selectedGroups')" />
+							</th>
+					 		<th id ="groupname">
+								$tlang.getString("revise.group.list.title")
+							</th>
+							<th id ="groupdescription">
+								$tlang.getString("revise.group.list.desc")
+							</th>
+						</tr>
+						#foreach ($group in $!groups)
+							<tr>
+								<td headers="selectAllGroups" class="attach">
+									#set($selected=false)
+									#foreach($aGroupRef in $announceToGroups)
+										#set($aGroup = $!site.getGroup($!aGroupRef))
+										#if ($!group.Id == $!aGroup.Id)
+											#set($selected = true)
+										#end
+									#end
+									<input type="checkbox" name="selectedGroups" id="group-$group.Id" title="$group.Title" value="$group.Id" #if($selected) checked="checked"#end/>
+								</td>
+								<td headers="groupname" nowrap="nowrap">
+									<label for="group-$group.Id">
+										$group.Title
+									</label>	
+								</td>
+								<td headers="groupdescription" width="100%"> ##mozilla does not resize table children dynamically , so set here
+									#set($description = "")
+									#set($description = $group.Description)
+									$!description
+								</td>
+							</tr>
+						#end
+					</table>
+			#end
+		#end				
+		<br>
+		    <input type="hidden" name="origname" id="origname" value="$edit_chat_channel" />
+		<div class="act">
+			<input type="submit" class="active" name="$form-submit" style="padding-left:1.5em;background: #eee url('/sakai-chat-tool/images/save.png') .2em no-repeat;" value="$tlang.getString("gen.done")" title="$tlang.getString("gen.done")[Accesskey + s]" accesskey="s" />
+			<input type="submit" name="$form-cancel" style="padding-left:1.5em;background: #eee url('/sakai-chat-tool/images/cancel.gif') .2em no-repeat;" value="$tlang.getString("gen.cancel")"  title="$tlang.getString("gen.cancel")[Accesskey + x]" accesskey="x" />
+		</div>
+	</form>
+</div>

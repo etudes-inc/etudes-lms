@@ -1,0 +1,35 @@
+<project>
+	<extend>../master/project.xml</extend> 
+    <pomVersion>3</pomVersion>
+    <name>sakai-blogger</name>
+    <artifactId>sakai-blogger</artifactId>
+    <groupId>sakaiproject</groupId>
+   	<currentVersion>${sakai.version}</currentVersion>
+   	<organization>
+        <name>Lancaster Centre for e-Science</name>
+        <url>http://e-science.lancs.ac.uk</url>
+   	</organization>
+   	<inceptionYear>2005</inceptionYear>
+
+	<developers>
+        <developer>
+            <name>Miguel Gonzalez Losa</name>
+            <email>m.gonzalez@lancaster.ac.uk</email>
+        </developer>
+        <developer>
+            <name>Adrian Fish</name>
+            <email>a.fish@lancaster.ac.uk</email>
+        </developer>
+    </developers>
+
+    <dependencies>
+        <dependency>
+            <groupId>sakaiproject</groupId>
+            <artifactId>sakai</artifactId>
+            <version>${sakai.plugin.version}</version>
+            <type>plugin</type>
+        </dependency>
+    </dependencies>
+
+    <build></build>
+</project>

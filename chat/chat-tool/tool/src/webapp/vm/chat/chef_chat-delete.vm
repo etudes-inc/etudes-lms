@@ -1,0 +1,37 @@
+## $Header: /cvs/sakai2/legacy/tools/src/webapp/vm/chat/chef_chat-delete.vm,v 1.1 2005/04/14 20:22:08 ggolden.umich.edu Exp $
+<div class="portletBody">
+	<h3>
+		$tlang.getString("delete.delete")
+	</h3>
+	#if ($alertMessage)<div class="alertMessage">$tlang.getString("gen.alert") $validator.escapeHtml($alertMessage)</div>
+	<div class="clear"></div>#end
+	<div class="alertMessage" style="clear:both">$tlang.getString("delete.sure")</div>
+	<div class="clear"></div>
+	<form name="deleteTemplateForm" action="#toolForm("$action")" method="post">
+		<table class="itemSummary" cellspacing="0">
+			<tr>
+				<th>$tlang.getString("gen.from")</th>
+				<td>$validator.escapeHtml($validator.escapeHtml($message.Header.From.DisplayName))</td>
+			</tr>
+			<tr>
+				<th>$tlang.getString("gen.date")</th> 
+				<td>$message.Header.Date.toStringLocalFullZ()</td>
+			</tr>
+		</table>	
+				<h4>$tlang.getString("gen.mess")</h4>
+				<p class="indnt1">
+					$validator.escapeHtmlFormattedText($message.Body)
+				</p>
+		<p class="act">
+			<input type="submit" accesskey="l" class="active" name="eventSubmit_doDeleteMessage" 
+			style="padding-left:2em;background: #eee url('/sakai-chat-tool/images/delete.png') .2em no-repeat;"
+			value="$tlang.getString("gen.delete")" title="$tlang.getString("gen.delete")[Accesskey + l]"/>
+			
+			<input type="submit" accesskey="x" 
+			style="padding-left:2em;background: #eee url('/sakai-chat-tool/images/cancel.gif') .2em no-repeat;"
+			title="$tlang.getString("gen.cancel")[Accesskey + x]"
+			value="$tlang.getString("gen.cancel")" name="eventSubmit_doCancel" />
+		</p>
+	</form>
+</div>
+

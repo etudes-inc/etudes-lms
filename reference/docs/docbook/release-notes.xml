@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?oxygen RNGSchema="http://docbook.org/xml/5.0b5/rng/docbook.rng" type="xml"?>
+<article xmlns="http://docbook.org/ns/docbook" xml:lang="en" xmlns:xl="http://www.w3.org/1999/xlink"
+    version="5.0">
+    <info>
+        <title>2.3.1 Release Notes</title>
+        <edition>15 January 2007 - version 2.3.1</edition>
+    </info>
+    <sect1 xml:id="overview">
+        <title>Overview</title>
+        <para>2.3.1 offers a handful of critical fixes to the 2.3.0 release, for both performance and security. To see the feature enhancements of the 2.3 series, see the <link xl:href="../2.3.0/release-notes.html">2.3.0 release notes</link>.  For the bug fixes in 2.3.1, see below.</para>
+    </sect1>
+    <sect1 xml:id="migration">
+        <title>Migrating from earlier versions</title>
+        <para>A migration from 2.2 to 2.3 is a smaller step than from 2.1 to 2.2, but what
+            conversions and alterations do need to be performed are identified below.</para>
+        <sect2 xml:id="migration-db">
+            <title>Database Conversion</title>
+            <para>A DB conversion script is required for a database migration from 2.2.2 to 2.3.1.</para>
+            <note>
+                <title>Note</title>
+                <para>DB conversions require the successive application of all intermediate scripts,
+                    e.g., a migration from 2.1.2 will require three conversions: one from 2.1.2 to
+                    2.2.0, one from 2.2.0 to 2.2.1, and then one from 2.2.2 to 2.3.1 (there was no
+                    DB conversion between 2.2.1 and 2.2.2).</para>
+            </note>
+
+            <para>The conversion scripts to be applied - in distinct versions for MySQL and Oracle,
+                respectively - are found in the <filename>reference/docs/conversion</filename>
+                folder of the release or on subversion: <link
+                    xl:href="https://source.sakaiproject.org/svn/reference/tags/sakai_2-3-1/docs/conversion"
+                    >https://source.sakaiproject.org/svn/reference/tags/sakai_2-3-1/docs/conversion</link></para>
+        </sect2>
+        
+    </sect1>
+    <sect1 xml:id="resolved">
+        <title>Fixes Included in this Release</title>
+        <para>Sakai 2.3.1 fixes the following issues:</para>
+        <para>
+            <link xl:href="fixed-issues.html">
+                http://source.sakaiproject.org/release/2.3.1/fixed-issues.html</link>
+        </para>
+    </sect1>
+    <sect1 xml:id="open-issues">
+        <title>Open Issues</title>
+        <para>The list of known issues with Sakai 2.3.1 is found at:</para>
+        <para>
+            <link xl:href="open-issues.html">
+                http://source.sakaiproject.org/release/2.3.1/open-issues.html</link>
+        </para>
+        <para>See in particular the "Important Issues" noted at the top of the list.</para>
+    </sect1>
+    <sect1 xml:id="maintenance">
+        <title>Maintenance Branch</title>
+        <para>The code of each release has a corresponding maintenance branch, which is patched with
+            fixes in an ongoing way by a branch manager - effectively until there is no longer
+            sufficient interest in it for a branch manager to volunteer. Maintenance branches
+            therefore represent the latest snapshot of fixes for any given Sakai version.</para>
+        <para>These maintenance branches may be checked out through subversion; they are labeled
+            with an 'x' replacing their minor version number, e.g. '2-3-x'. You can check out the
+            2.3 maintenance branch with the following command: </para>
+        <para>
+            <command>svn co
+            https://source.sakaiproject.org/svn/sakai/branches/sakai_2-3-x/</command>
+        </para>
+        <para>If you come upon an important fix that you believe should be included in the branch
+            (and perhaps isn't yet), feel free to bring it to the attention of the branch manager,
+            Lance Speelmon (lance@indiana.edu).</para>
+    </sect1>
+</article>

@@ -1,0 +1,140 @@
+	## This shows the list of archived announcements
+
+
+############################################# Check if message hidden macro begin
+#macro(rowTRconstruct $props $displayOptions $draft $merged)
+
+	#set($now = $timeservice.newTime())
+	#set($reldateset = false)
+	
+	#if (!$props.isEmpty() && $props.getProperty("releaseDate"))
+		#set($releasedate = $props.getTimeProperty("releaseDate"))
+		#set($reldateset = $now.before($releasedate))
+	#end
+
+   ## not released and not a draft
+	#if ($reldateset && !$draft)
+			class="inactive"
+	#end
+	
+	#if (!$merged) 
+		class="lightHighLightRow"
+	#end
+
+#end
+############################################# Check if message hidden macro end
+
+		
+<script type="text/javascript" language="javascript">
+function selectAll()
+{
+  var listSizeVal = 0;
+  if (document.getElementById("showListSize") != null || document.getElementById("showListSize") != undefined)
+  	listSizeVal = document.getElementById("showListSize").value;
+  	
+  var allcheckVal = false;
+  if (document.getElementById("allcheck")!= null || document.getElementById("allcheck") != undefined)
+  	allcheckVal = document.getElementById("allcheck").checked;
+    	    	  
+    for (i=1;i<=parseInt(listSizeVal);i++)
+    {	
+	     if ( document.getElementById("check-"+i) != null ||  document.getElementById("check-"+i) != undefined)
+	    {
+			  if (allcheckVal == true)
+			  	    document.getElementById("check-"+i).checked=true;	    
+			  else 	document.getElementById("check-"+i).checked=false;
+		} 	 
+	}
+}
+</script>
+
+	
+<div class="portletBody">
+  <p class="shorttext">
+	<img src="/sakai-announcement-tool/images/restore.png" height="16" width="16" style="border:0" alt=""  />
+		$tlang.getString("gen.restore")
+   </p>
+     #if ($alertMessage)<div class="alertMessage">$tlang.getString("gen.alert") $validator.escapeHtml($alertMessage)</div><div class="clear"></div>#end
+
+			<br />
+				<form name="announcementListForm" action="#toolForm("AnnouncementAction")" method="post">
+				<input type="hidden" id="showListSize" value="$allMsgNumberInt" />
+				<table class="listHier lines nolines" border="0" cellspacing="0" summary="$tlang.getString('gen.tablecaptionworksp')">
+					<tr>
+					    <th class="attach" id="checkbox">
+					      <input type="checkbox" id="allcheck" onclick="javascript:selectAll()"/>										
+						</th>
+						<th id ="viewAnnc" class="attach"></th>
+						<th id ="subject">
+                          $tlang.getString('gen.subject')
+						</th>
+						<th id="author">
+						 $tlang.getString('gen.from')
+						</th>
+						<th id ="date">
+							$tlang.getString('gen.date')
+						</th>	
+						<th id ="releaseDate">
+							$tlang.getString('gen.releasedate')
+						</th>	
+					    <th id ="datearch">
+							$tlang.getString('gen.datearchived')
+						</th>									
+				
+					</tr>
+					#set ($rowCount=0)
+					#foreach ($ann_item in $archMessagesList)
+						#set ($rowCount =$rowCount + 1)
+						#set($ann_item_props=$ann_item.getProperties())
+						#set ($merged = true)
+						<tr #rowTRconstruct($ann_item_props $displayOptions $ann_item.Header.draft $merged) >
+						    <td headers="checkbox" class="attach">
+							  <label for ="check-$rowCount" class="skip">$tlang.getString("gen.selectremove")</label>
+							   <input title="$tlang.getString("gen.selectremove")" type="checkbox" id="check-$rowCount" name="selectedMembers" value="$ann_item.Reference" />
+							</td>
+							<td headers="viewAnnc" class="attach">
+							  <a href="#toolLinkParam("AnnouncementAction" "doShowmetadata" "itemReference=$validator.escapeUrl($ann_item.reference)")" title="$tlang.getString('gen.viewann') $validator.escapeHtml($ann_item.Header.subject)">
+						  	   <img src = "/sakai-announcement-tool/images/preview.png" border="0" /> 
+						  	   </a>
+							</td>
+							<td headers="subject">
+								<h4>
+									$validator.escapeHtml($ann_item.Header.subject)
+								</h4>	
+							</td>
+							<td headers="author">
+								$validator.escapeHtml($ann_item.Header.From.DisplayName)
+							</td>
+							<td headers="date">
+									$ann_item.Header.Date.toStringLocalFull()
+							</td>
+							<td headers="releaseDate">
+                                    #if (!$ann_item_props.isEmpty() && $ann_item_props.getProperty("releaseDate"))
+											$ann_item_props.getTimeProperty("releaseDate").toStringLocalFull()
+									#else
+											&nbsp;	
+									#end								
+							</td>
+							<td headers="datearch">
+								#if (!$ann_item_props.isEmpty() && $ann_item_props.getProperty("archivedDate"))
+									$ann_item_props.getTimeProperty("archivedDate").toStringLocalFull()
+								#else
+									&nbsp;	
+								#end
+							</td>
+						</tr>
+						#end
+					</table>
+					<p style="background: #EEEEEE;border: 0;margin: 5px 0 5px 0;line-height: 2em;padding-left: 1em;">
+			          <input type="submit" accesskey="l" class="active" name="eventSubmit_doRestoreAnnouncement" 
+			          style="padding-left:2em;background: #eee url('/sakai-announcement-tool/images/OK.png') .2em no-repeat;"
+			           value="$tlang.getString("gen.ok")" title="$tlang.getString("gen.ok")[Accesskey + k]"/>
+					  <input type="submit" accesskey="x" 
+			          style="padding-left:2em;background: #eee url('/sakai-announcement-tool/images/cancel.gif') .2em no-repeat;"
+			          title="$tlang.getString("gen.cancel")[Accesskey + x]"
+			          value="$tlang.getString("gen.cancel")" name="eventSubmit_doCancel" />
+		</p>
+				</form>
+		
+		
+</div>

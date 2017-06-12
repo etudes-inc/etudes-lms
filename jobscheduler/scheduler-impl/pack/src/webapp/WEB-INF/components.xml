@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+    <bean id="org.sakaiproject.scheduler.api.DbScheduleService"
+			class="org.sakaiproject.scheduler.impl.DbScheduleServiceImpl"
+			init-method="init"
+			destroy-method="destroy"
+			singleton="true">	
+			<property name="sqlService"><ref bean="org.sakaiproject.db.api.SqlService"/></property>
+			<property name="idManager"><ref bean="org.sakaiproject.id.api.IdManager"/></property>
+	</bean>	
+</beans>

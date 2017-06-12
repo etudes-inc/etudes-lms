@@ -1,0 +1,129 @@
+##<!-- $Header: /cvs/sakai2/legacy/tools/src/webapp/vm/sitesetup/chef_site-siteInfo-editInfoConfirm.vm,v 1.2 2005/05/23 04:04:12 ggolden.umich.edu Exp $ -->
+## Edit Site Information Confirmation page
+<div class="portletBody">
+	<h3>
+		$tlang.getString("sitediconf.con") $validator.escapeHtml($!title)
+	</h3>
+	<p class="instruction">
+		$tlang.getString("sitediconf.cli")
+	</p>
+	<form name="classInformationForm" method="post" action="#toolForm("SiteAction")">
+		<table class="itemSummary" summary="layout">
+			<tr>
+				<th>
+					$tlang.getString("sitediconf.sittit")
+				</th>
+				<td>
+					#if (!$!title.equals($!oTitle))
+						<span class="highlight">$validator.escapeHtml($!title)</span>
+					#else
+						$validator.escapeHtml($!title)
+					#end
+				</td>					
+			</tr>
+			#if ($!isCourseSite)
+				<tr>
+					<th>
+						$tlang.getString("sitediconf.term")
+					</th>
+					<td>
+						$!siteTerm
+					</td>					
+				</tr>
+			#end
+			<tr>
+				<th>
+					$tlang.getString("sitediconf.des")
+				</th>
+				<td>
+					#if (!$!description.equals($!oDescription))
+						<span class="highlight">$validator.escapeHtml($!description)</span>
+					#else
+						$validator.escapeHtml($!description)
+					#end
+				</td>					
+			</tr>
+			<tr>
+				<th>
+					$tlang.getString("sitediconf.shodes")
+				</th>
+				<td>
+					#if (!$!short_description.equals($!oShort_description))
+						<span class="highlight">$validator.escapeHtml($!short_description)</span>
+					#else
+						$validator.escapeHtml($!short_description)
+					#end
+				</td>
+			</tr>
+			#if ($!isCourseSite)
+				<tr>
+					<th>
+						$tlang.getString("sitediconf.app")
+					</th>
+					<td>
+						#foreach ($s in $skins)
+							#set($url="")
+							#set($url=$!s.Url)
+							#set($newSkin="")
+							#set($newSkin=$!skin)
+							#set($oldSkin="")
+							#set($oldSkin=$!oSkin)
+							#if ($url == $newSkin)
+								#if (!$newSkin.equals($!oldSkin))
+									<span class="highlight">$s.Name</span>
+								#else
+									$s.Name
+								#end
+							#end
+						#end
+					</td>
+				</tr>
+			#else
+				<tr>
+					<th>
+						$tlang.getString("sitediconf.sitico")
+					</th>
+					<td>
+						#if (!$!icon.equals($!oIcon))
+							<span class="highlight">$!icon</span>
+						#else
+							$!icon
+						#end
+					</td>
+				</tr>
+			#end
+			<tr>
+				<th>
+					$tlang.getString("sitediconf.sitconnam")
+				</th>
+				<td>
+					#if (!$!name.equals($!oName))
+						<span class="highlight">$!name</span>
+					#else
+						$!name
+					#end
+				</td>					
+			</tr>
+			<tr>
+				<th>
+					$tlang.getString("sitediconf.siticonema")
+				</th>
+				<td>
+					#if (!$!email.equals($!oEmail))
+						<span class="highlight">$!email</span>
+					#else
+						$!email
+					#end
+				</td>					
+			</tr>
+		</table>
+		<input type="hidden" name="back" value="13" />
+		<input type="hidden" name="template-index" value="14" />
+		<input type="hidden" name="continue" value="12" />
+		<p class="act">
+			<input type="submit" accesskey="s" class="active" name="eventSubmit_doSave_siteInfo" value="$tlang.getString("sitediconf.fin")" />
+			<input type="submit" accesskey="b" name="eventSubmit_doBack" value="$tlang.getString("sitediconf.bac")" />
+			<input type="submit" accesskey="x" name="eventSubmit_doCancel" value="$tlang.getString("sitediconf.can")" />
+		</p>
+	</form>
+</div>

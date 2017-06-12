@@ -1,0 +1,45 @@
+<div class="portletBody"> 
+	<form name="Options" action="#toolForm("$action")" method="post">
+		<p class="shorttext">
+			<img src="/sakai-announcement-tool/images/combine.png" height="16" width="16" style="border:0" alt=""  />
+				$tlang.getString("merge.show")
+		</p>
+		#if ($alertMessage)<div class="alertMessage">$tlang.getString("gen.alert") $validator.escapeHtml($alertMessage)</div>#end
+		<p class="instruction">
+			$tlang.getString("merge.select")
+		</p>
+		<table class="listHier lines nolines" cellspacing="0" summary="$tlang.getString("merge.list.summary")">
+		  <tr> 
+			<th id="announcementSite">$tlang.getString("gen.site")</th>
+			<th id="checkbox">$tlang.getString("merge.showann")</th>
+		  </tr>
+		  #set ($siteNumber =1)
+		  #foreach ($announcementEntry in $mergedAnnouncementsCollection)
+			#if ($announcementEntry.isVisible())
+				<tr> 
+					<td headers="announcementSite"><h4><label for="site$siteNumber">$announcementEntry.getDisplayName()</label></h4></td>
+					<td headers="checkbox">
+						<input type="checkbox" id="site$siteNumber" name="$announcementEntry.getReference()" value="$announcementEntry.getReference()"
+						#if($announcementEntry.isMerged())
+						checked
+						#end
+					/>
+				</td>
+				 </tr>
+				 #set($siteNumber=$siteNumber + 1)
+			#end
+		  #end
+		 </table>
+		<p style="background: #EEEEEE;border: 0;margin: 5px 0 5px 0;line-height: 2em;padding-left: 1em;">
+			<input type="submit" accesskey="s" class="active" name="eventSubmit_doUpdate" 
+			style="padding-left:2em;background: #eee url('/sakai-announcement-tool/images/save.png') .2em no-repeat;"
+			value="$tlang.getString("gen.save")" title="$tlang.getString("gen.save")[Accesskey + s]" />
+			
+			<input type="submit" accesskey="x" name="eventSubmit_doCancel" 
+			style="padding-left:2em;background: #eee url('/sakai-announcement-tool/images/cancel.gif') .2em no-repeat;"
+			value="$tlang.getString("gen.cancel")" title="$tlang.getString("gen.cancel")[Accesskey + x]"/>
+		</p>
+		<input type="hidden" name="state" value="$state" />
+	</form>
+</div>
+

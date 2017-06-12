@@ -1,0 +1,336 @@
+## $Header: /cvs/sakai2/legacy/tools/src/webapp/vm/announcement/chef_announcements-revise.vm,v 1.4 2005/05/15 04:54:19 gsilver.umich.edu Exp $ 
+<script type="text/javascript" language="JavaScript" src="/sakai-announcement-tool/calendar/calendar2.js"></script>
+<script type="text/javascript" language="JavaScript">
+  focus_path = ["subject"];
+function showPdateCal()
+{
+  var dt = new Date(document.reviseForm.postDate.value);
+  if (document.reviseForm.postDate.value.replace(/^\s*|\s*$/g, "").length == 0) 
+  {
+   var cal2_stdate = new calendar2(document.forms['reviseForm'].elements['postDate']);
+    cal2_stdate.popup();
+    document.reviseForm.postDate.select(); 
+  }
+  else
+  {
+    if (!isNaN(dt))
+    {
+    var cal2_stdate = new calendar2(document.forms['reviseForm'].elements['postDate']);
+    cal2_stdate.popup();
+    document.reviseForm.postDate.select();
+    }
+    else
+    {
+     document.reviseForm.postDate.select();
+    }
+  }
+}
+
+				
+function anncCkEditor(textarea_id)
+{
+	function config()
+	{		
+	}
+	
+	#if ($enableVT)
+	{
+	config.prototype.enableVT=true;
+	config.prototype.serverUrl='$serverUrl';	
+	config.prototype.siteId='$siteId';
+	config.prototype.resourceId='$resourceId';
+	}
+	#end
+	sakai.editor.launch(textarea_id, new config(), 720, 300);	
+}
+</script>
+<div class="portletBody">
+	
+		#if ( $newAnn =="true")
+			<p class="shorttext"><input type="image" id="annc-add-img" src="/sakai-announcement-tool/images/document_add.gif" height="16" width="16" style="border:0" alt=""  title="" />
+				$tlang.getString("revise.add")</p>
+		#else
+			<p class="shorttext"> <input type="image" id="annc-edit-img" src="/sakai-announcement-tool/images/document_edit.gif" height="16" width="16" style="border:0" alt=""  title="" />
+			$tlang.getString("revise.revise") </p>
+		#end
+	
+	#if ($alertMessage)<div class="alertMessage">$tlang.getString("gen.alert") $validator.escapeHtml($alertMessage)</div><div class="clear"></div>#end
+	<div class="indnt1">
+		<p class="instruction">
+				#if ( $newAnn =="true")
+					$tlang.getString("revise.complete") $tlang.getString("revise.required") <span class="reqStarInline">*</span> $tlang.getString("revise.required1")
+				#else
+					$tlang.getString("revise.update") $tlang.getString("revise.required") <span class="reqStarInline">*</span> $tlang.getString("revise.required1")
+				#end
+		</p>
+	</div>	
+		<form name="reviseForm" id="reviseForm" action="#toolForm("AnnouncementAction")" method="post" onsubmit="return true;" >
+				<input type="hidden" name="eventSubmit_doAnnouncement_form" value="" />
+				<input type="hidden" name="option" id="option" value="" />
+			<div class="indnt1">
+			<input type="hidden" name="fromInterface" value="revise" />
+			<p class="shorttext">
+				<span class="reqStar">*</span>
+				<label for="subject">
+					$tlang.getString("revise.subject") 
+				</label>
+				#if ($new=="true")
+					<input type="text" size="45" name="subject" id="subject" value="$validator.escapeHtml($tempSubject)" />                
+				#else
+					<input type="text" size="45" name="subject" id="subject" value="$validator.escapeHtml($message.Header.subject)" />
+				#end
+			</p>
+			<div class="longtext">
+				<label for="body" class="block">
+					<span class="reqStar">*</span>$tlang.getString("revise.announcement")
+				</label>
+				<table border="0" cellpadding="0" cellspacing="0" >
+					<tr>
+						<td>
+							#if ($new=="true")
+								#if ($!tempBody.length() != 0)
+									<textarea name="body" class="block" id="body" cols="65" rows="30" wrap="virtual">$validator.escapeHtmlFormattedTextarea($tempBody)</textarea>
+								#else
+									<textarea name="body" class="block" id="body" cols="65" rows="30" wrap="virtual"></textarea>
+								#end
+							#else
+								#set($messageBody = $message.body)
+								#if ($!messageBody.length() != 0)
+									<textarea name="body" class="block" id="body" cols="65" rows="30" wrap="virtual">$validator.escapeHtmlFormattedTextarea($message.body)</textarea>
+								#else
+									<textarea name="body" class="block" id="body" cols="65" rows="30" wrap="virtual"></textarea>
+								#end
+							#end
+							<script>anncCkEditor("body")</script>
+						</td>
+					</tr>
+				</table>
+			</div>
+		#if ($!groups || ($!groups.size()>1)) #set ($show_group = "true") #else #set ($show_group = "false") #end
+		#if (($!publicDisable && ($show_group =="false")) || $pubviewset)
+			## no show this selection, but set default to site
+			<input type="hidden" name="announceTo" id="site" value="site" checked="checked" />
+		#else
+			#if ($allowAddChannelMessage)
+				#if (!$!publicDisable)
+				<p class="checkbox">
+					<input type="radio" name="announceTo" id="pubview" value="pubview" #if($!announceTo == "pubview" || $!pubview)checked="checked"#end onclick="document.getElementById('groupTable').style.display = 'none';" onkeypress="document.getElementById('groupTable').style.display = 'none';" />
+					<label for="pubview">$tlang.getString("displayto.public")</label>
+				</p>
+				#end
+				<p class="checkbox">
+					<input type="radio" name="announceTo" id="site" value="site" #if(!$!pubview && ($!announceTo == "site" || $!message.AnnouncementHeader.Access == $channelAccess))checked="checked"#end onclick="document.getElementById('groupTable').style.display = 'none';" onkeypress="document.getElementById('groupTable').style.display = 'none';" />
+					<label for="site">$tlang.getString("displayto.site")</label>
+				</p>	
+			#else
+				#if ($!groups.size() >1)
+					<label for="$tlang.getString('groups')">$tlang.getString("groups")</label>
+				#else
+					<label for="$tlang.getString('group')">$tlang.getString("group")</label>
+				#end
+			#end
+			#if ($!groups)
+				## added group awareness
+				<p class="checkbox">
+					<input type="radio" name="announceTo" id="groups" value="groups" #if(!$!pubview && ($!announceTo == "groups" || $!message.AnnouncementHeader.Access == $groupAccess))checked="checked"#end onclick="document.getElementById('groupTable').style.display = 'block';document.getElementById('groupTable').style.width = '80%';" onkeypress="document.getElementById('groupTable').style.display = 'block';" />
+					<label for="groups">$tlang.getString("displayto.selected")</label>
+				</p>	
+				#if(!$!pubview && ($!announceTo == "groups" || $!message.AnnouncementHeader.Access == $groupAccess))
+					#set ($listDisplay="block")
+				#else
+					#set ($listDisplay="none")
+				#end
+					<table id="groupTable" style="width:80%;display:$listDisplay" class="listHier lines indnt3" border="0" cellspacing="0" summary="$tlang.getString("revise.group.list.summary")">
+					<caption class="skip" style="display:none">$tlang.getString("displayto.selected")</caption>
+						<tr>
+							<th id ="selectAllGroups" class="attach">
+								<input type="checkbox" name="selectall" value="" id="selectall" title="toggle select all" onclick="javascript:toggleSelectAll(this, 'selectedGroups')" onkeypress="javascript:toggleSelectAll(this, 'selectedGroups')" />
+							</th>
+					 		<th id ="groupname">
+								$tlang.getString("revise.group.list.title")
+							</th>
+							<th id ="groupdescription">
+								$tlang.getString("revise.group.list.desc")
+							</th>
+						</tr>
+						#foreach ($group in $!groups)
+							<tr>
+								<td headers="selectAllGroups" class="attach">
+									#set($selected=false)
+									#foreach($aGroupRef in $announceToGroups)
+										#set($aGroup = $!site.getGroup($!aGroupRef))
+										#if ($!group.Id == $!aGroup.Id)
+											#set($selected = true)
+										#end
+									#end
+									#if($groups.size() == 1) #set($selected=true) #end
+									#set($disabled=true)
+									#if($allowedRemoveGroups.contains($group)) #set($disabled=false) #end
+									<input #if($disabled) type="hidden" #else type="checkbox" #end name="selectedGroups" id="group-$group.Id" title="$group.Title" value="$group.Id" #if($selected) checked="checked"#end/>
+									#if($disabled && $selected)<img src="#imageLink("sakai/checkon.gif")" border="0" width="17" height="13" align="top" />#end
+								</td>
+								<td headers="groupname" nowrap="nowrap">
+									<label for="group-$group.Id">
+										$group.Title
+									</label>	
+								</td>
+								<td headers="groupdescription" width="100%"> ##mozilla does not resize table children dynamically , so set here
+									#set($description = "")
+									#set($description = $group.Description)
+									$!description
+								</td>
+							</tr>
+						#end
+					</table>
+			#end
+		#end
+##
+################### AVAILABLE section (to set post dates)
+        #if ($channel_id != "/announcement/channel/!site/motd")
+			<h4>$tlang.getString("revise.availtitle")</h4>
+			 <p class="shorttext">
+     		<label for="postDateLabel">
+				$tlang.getString("revise.postdate")
+			</label>	
+			    <input type="text" name="postDate" id="postDate" size="20" value="$releaseDate" />		
+			<input type="image" id="pdateCal" onclick="showPdateCal();return false;" width="20" height="20" src="/sakai-announcement-tool/calendar/images/cal.gif" alt=""  title="Popup date selector" style="border:0;vertical-align:bottom"/>
+		</p>
+		#end	
+################### End Start and end date selectors
+##
+			<h4>
+			$tlang.getString("revise.attachments")
+			</h4>	
+			#set ($size = 0)
+			#if (!$attachments.isEmpty())
+				 #set ($props = false)
+				 #set ($size =  $attachments.size())
+				 <ul class="attachList">
+					 #foreach ($attachment in $attachments)
+						#set ($props = $attachment.Properties)
+						#if (!$props)
+							#if ($size > 0) #set ($size = $size - 1) #end
+						#else
+							#if ($props.getBooleanProperty($props.NamePropIsCollection))
+								<li>
+									<img src = "#imageLink($contentTypeImageService.getContentTypeImage("folder"))" border="0" alt="folder" />
+							#else
+								<li>
+									<img src = "#imageLink($contentTypeImageService.getContentTypeImage($props.getProperty($props.NamePropContentType)))" border="0" alt ="$props.getProperty($props.NamePropContentType)" />
+							#end
+							<a class="toolUiLinkU" href="$attachment.Url" target="_blank">
+							$validator.escapeHtml($attachment.Properties.getPropertyFormatted("DAV:displayname"))</a>
+							#if (!$props.getBooleanProperty($props.NamePropIsCollection))
+								($props.getPropertyFormatted($props.NamePropContentLength))
+							#end
+							</li>
+						#end
+						#set ($props = false)
+					#end
+				</ul>	
+			#end
+			#if ($size == 0) 
+				<a  class="toolUiLink" href="#" name="attach" onclick="javascript:document.reviseForm.onsubmit();document.getElementById('option').value='attach';document.reviseForm.submit();return false;">
+					<input type="image" id="annc-attach-img" src="/sakai-announcement-tool/images/attach.png" alt=""  title="" style="border:0"/>
+					$tlang.getString("revise.addatt")
+				</a>
+			#else
+		    	<a  class="toolUiLink" href="#" name="attach" onclick="javascript:document.reviseForm.onsubmit();document.getElementById('option').value='attach';document.reviseForm.submit();return false;" >
+					<input type="image" id="annc-attach-img1" src="/sakai-announcement-tool/images/attach.png" alt=""  title="" style="border:0"/>
+					$tlang.getString("revise.addrem")
+				</a>
+			#end
+			#if ($channel_id != "/announcement/channel/!site/motd")
+			#if ($notification)
+				<h4>$tlang.getString("revise.notify1")</h4>
+				<p class="shorttext">
+					<label for="notify">
+      				$tlang.getString("revise.notify")
+					</label>
+					<select name="notify" id="notify">
+						#if ($noti)
+							<option value="r" #if($noti=="r") selected="selected" #end>$tlang.getString("revise.notify_high")</option>
+							<option value="o" #if($noti=="o") selected="selected" #end>$tlang.getString("revise.notify_low")</option>
+							<option value="n" #if($noti=="n") selected="selected" #end>$tlang.getString("revise.notify_none")</option>
+						#else	
+							<option value="r">$tlang.getString("revise.notify_high")</option>
+							<option value="o">$tlang.getString("revise.notify_low")</option>
+							<option value="n" selected="selected">$tlang.getString("revise.notify_none")</option>
+						#end
+					</select>
+				</p>	
+			#end
+			#end
+		</div>	
+		<p style="background: #EEEEEE;border: 0;margin: 5px 0 5px 0;line-height: 2em;padding-left: 1em;">
+		      
+				#if ($channel_id != "/announcement/channel/!site/motd")
+				<input type="button" class="active" name="post" id="post" accesskey="d" 
+				value="$tlang.getString("revise.done")" title="$tlang.getString("revise.done") [Access key + d]"
+				style="padding-left:2em;background: #eee url('/sakai-announcement-tool/images/return_sm.png') .2em no-repeat;"
+				 onclick="javascript:document.reviseForm.onsubmit();document.getElementById('option').value='post';document.reviseForm.submit();return false;" />
+				 #if ($newAnn =="else")
+				   #if (!$message.AnnouncementHeader.draft)
+		             <input type="hidden" id="saveVal" name="saveVal" value="post" />
+		           #end
+		         #end  
+				#else
+				<input type="button" class="active" name="postmotd" id="postmotd" accesskey="d" 
+				value="$tlang.getString("revise.done")" title="$tlang.getString("revise.done") [Access key + d]"
+				style="padding-left:2em;background: #eee url('/sakai-announcement-tool/images/return_sm.png') .2em no-repeat;"
+				 onclick="javascript:document.reviseForm.onsubmit();document.getElementById('option').value='postmotd';document.reviseForm.submit();return false;" />
+				 #if ($newAnn =="else")
+				  #if (!$message.AnnouncementHeader.draft)
+		           <input type="hidden" id="saveVal" name="saveVal" value="postmotd" />
+				#end 
+                 #end
+				#end 
+				
+				<input type="button" accesskey="v" name="preview" 
+				value="$tlang.getString("revise.preview")" title="$tlang.getString("revise.preview") [Access key + v]"
+				style="padding-left:2em;background: #eee url('/sakai-announcement-tool/images/preview.png') .2em no-repeat;"
+				onclick="javascript:document.reviseForm.onsubmit();document.getElementById('option').value='preview';document.reviseForm.submit();return false;" />
+				
+				#if ($channel_id != "/announcement/channel/!site/motd")
+				<input type="button" accesskey="s" name="save" id="save"
+				value="$tlang.getString("revise.savedraft")" title="$tlang.getString("revise.savedraft") [Access key + s]" 
+				style="padding-left:2em;background: #eee url('/sakai-announcement-tool/images/save_draft.png') .2em no-repeat;"
+				onclick="javascript:document.reviseForm.onsubmit();document.getElementById('option').value='save';document.reviseForm.submit();return false;" />
+				  #if ($message.AnnouncementHeader.draft || $newAnn =="true")
+			        <input type="hidden" id="saveVal" name="saveVal" value="save" />
+			      #end
+				#else
+				<input type="button" accesskey="s" name="savemotd" id="savemotd"
+				value="$tlang.getString("revise.savedraft")" title="$tlang.getString("revise.savedraft") [Access key + s]" 
+				style="padding-left:2em;background: #eee url('/sakai-announcement-tool/images/save_draft.png') .2em no-repeat;"
+				onclick="javascript:document.reviseForm.onsubmit();document.getElementById('option').value='savemotd';document.reviseForm.submit();return false;" />
+			      #if ($message.AnnouncementHeader.draft || $newAnn =="true")
+			        <input type="hidden" id="saveVal" name="saveVal" value="savemotd" />
+				#end
+				#end
+				<input type="button" 
+				style="padding-left:2em;background: #eee url('/sakai-announcement-tool/images/cancel.gif') .2em no-repeat;" 
+				accesskey="x" title="$tlang.getString("gen.cancel") [Access key + x]" 
+				name="cancel" value="$tlang.getString("gen.cancel")" 
+				onclick="javascript:document.reviseForm.onsubmit();document.getElementById('option').value='cancel';document.reviseForm.submit();return false;" />   
+		</p>
+		
+	</form>
+</div>
+<script language="JavaScript" type="text/JavaScript">
+	<!--
+		function toggleSelectAll(caller, elementName)
+		{
+			var newValue = caller.checked;
+			var elements = document.getElementsByName(elementName);
+			
+			if(elements)
+			{
+				for(var i = 0; i < elements.length; i++)
+				{
+					elements[i].checked = newValue;
+				}
+			}
+		}
+	-->
+</script>

@@ -1,0 +1,129 @@
+##<!-- $Header: /cvs/sakai2/legacy/tools/src/webapp/vm/prefs/chef_membership_joinable.vm,v 1.13 2005/05/28 03:04:36 ggolden.umich.edu Exp $ -->
+<div class="portletBody">
+	<div class="navIntraTool">
+	<a href="#toolLink("$action" "doGoto_unjoinable")" title="$tlang.getString('mb.cursit')">$tlang.getString('mb.cursit')</a>
+	|
+	$tlang.getString("mb.joisit")
+	</div>
+	
+	<h3>
+		$tlang.getString("mb.joinable")
+	</h3>
+	## join/unjoin action info normally is the only value of "alertMessage"
+	#if ($alertMessage)<p class="information">$validator.escapeHtml($alertMessage)</p>#end
+	
+
+	#if ($openSites.size()>0)
+	<div class="navPanel">
+		<div class="searchNav">
+			<form name="searchform" method="post" class="inlineForm" action="#toolForm("$action")">
+			<label for="search" class="skip">$tlang.getString("mb.list.search")</label>
+			<input type="text" size="15" id="search" name="search" value="$search" /> 
+			<input type="submit" name="eventSubmit_doSearch" value="$tlang.getString("mb.list.search")" />
+			<input type="submit" name="eventSubmit_doSearch_clear" value="$tlang.getString("mb.list.clear")" />
+			</form> 
+		</div>
+	</div>	
+
+		<div class="navPanel">
+			<div class="viewNav">
+				<div class="instruction">
+					$tlang.getString("mb.listjoin")
+				</div>
+			</div>
+			<div class="listNav">
+				<div class="instruction">
+					$tlang.getString("mb.list.viewing") $topMsgPos - $btmMsgPos $tlang.getString("mb.list.of") $allMsgNumber $tlang.getString("mb.list.sites")
+				</div>
+				<div class="innerPannel">
+					#if ($pagesize != 0)
+						#if ($goPPButton == "true")
+							<form name="firstpageForm" class="inlineForm" method="post" action="#toolForm("$action")">
+								<input type="submit" name="eventSubmit_doList_first" value="|&lt;" title="$tlang.getString("mb.list.pager.first")" />
+							</form>
+						#else
+							<form name="firstpageForm" class="inlineForm" method="post" action="#toolForm("$action")">
+								<input type="submit" name="eventSubmit_doList_first" value="|&lt;" disabled="disabled" />
+							</form>
+						#end
+						#if ($goPPButton == "true")
+						<form name="nextpageForm" class="inlineForm" method="post" action="#toolForm("$action")">
+								<input type="submit" name="eventSubmit_doList_prev" value="&lt;" title="$tlang.getString("mb.list.pager.prev") $pagesize"  accesskey="p" />
+							</form>
+						#else
+							<form name="nextpageForm" class="inlineForm" method="post" action="#toolForm("$action")">
+								<input type="submit" name="eventSubmit_doList_prev" value="&lt;" disabled="disabled" />
+							</form>
+						#end
+					#end
+					<form name="pagesizeForm" class="inlineForm" method="post" action="#toolForm("$action")">
+						<input type="hidden" name="eventSubmit_doChange_pagesize" value="changepagesize" />
+						<label class="skip" for="pagerSelect">$tlang.getString("mb.list.select")</label>
+						<select name="selectPageSize" onchange="blur();document.pagesizeForm.submit();" id="pagerSelect">
+						<option value="5" #if($pagesize == 5) selected="selected" #end>$tlang.getString("mb.list.pager.show5")</option>
+							<option value="10" #if($pagesize == 10) selected="selected" #end>$tlang.getString("mb.list.pager.show10")</option>
+							<option value="20" #if($pagesize == 20) selected="selected" #end>$tlang.getString("mb.list.pager.show20")</option>
+							<option value="50" #if($pagesize == 50) selected="selected" #end>$tlang.getString("mb.list.pager.show50")</option>
+							<option value="100" #if($pagesize == 100) selected="selected" #end>$tlang.getString("mb.list.pager.show100")</option>
+							<option value="200" #if($pagesize == 200) selected="selected" #end>$tlang.getString("mb.list.pager.show200")</option>
+						</select>
+					</form>
+					#if ($pagesize != 0)
+						#if ($goNPButton == "true")
+							<form name="nextpageForm" class="inlineForm" method="post" action="#toolForm("$action")">
+								<input type="submit" name="eventSubmit_doList_next" value="&gt;" title="$tlang.getString("mb.list.pager.next") $pagesize"  accesskey="n" />
+							</form>
+						#else
+							<form name="nextpageForm" class="inlineForm" method="post" action="#toolForm("$action")">
+								<input type="submit" name="eventSubmit_doList_next" value="&gt;" disabled="disabled" />
+							</form>
+						#end
+						#if ($goNPButton == "true")
+							<form name="lastpageForm" class="inlineForm" method="post" action="#toolForm("$action")">
+								<input type="submit" name="eventSubmit_doList_last" value="&gt;|" title="$tlang.getString("mb.list.pager.last")" />
+							</form>
+						#else
+							<form name="lastpageForm" class="inlineForm" method="post" action="#toolForm("$action")">
+								<input type="submit" name="eventSubmit_doList_last" value="&gt;|" disabled="disabled" />
+							</form>
+	
+						#end
+					#end
+				</div>
+			</div>
+		</div>	
+		<form action="#toolForm("$action")" method="post">
+			<table class = "listHier lines" cellspacing="0" border="0"  summary ="$tlang.getString("mb.list.joinable.summary")">
+				<tr>
+					<th id="worksite">
+						<a href="#toolLink("$action" "doToggle_joinable_sort")" title ="$tlang.getString('list.sortbytitle')"> 
+							$tlang.getString("gen.worksite")
+							#if ($currentSortAsc) 
+								<img src = "#imageLink("sakai/sortascending.gif")" border="0" title ="$tlang.getString('list.stasc')" alt ="$tlang.getString('list.stasc')" /> 
+							#else 
+								<img src = "#imageLink("sakai/sortdescending.gif")" border="0" title ="$tlang.getString('list.stdesc')" alt ="$tlang.getString('list.stdesc')" /> 
+							#end
+						</a>
+					</th>
+					<th id="description">$tlang.getString("gen.description")</th>
+				</tr>
+				#foreach ($site in $openSites)
+					<tr>
+
+					<td headers="worksite" style="white-space:nowrap">
+					## Note: joinable site shouldn't be clickable because of the permission issues
+					## <a href="$site.Url" target="_top" title="Go to site $validator.escapeHtml($site.Title)">$validator.escapeHtml($site.Title)</a>
+					<h4>$validator.escapeHtml($site.Title)</h4>
+						<div class="itemAction">
+							<a href="#toolLinkParam("$action" "doJoin" "itemReference=$validator.escapeUrl($site.Id)")" title="$tlang.getString('mb.joinsite') $!validator.escapeHtml($!site.Title)">$tlang.getString('mb.join')</a>
+						</div>	
+						</td>
+						<td headers="description">$!validator.escapeHtml($!site.Description)</td>
+					</tr>
+				#end	
+			</table>
+		</form>
+	#else
+		<p class="instruction">$tlang.getString('mb.list.nosites')</p>
+	#end
+</div>

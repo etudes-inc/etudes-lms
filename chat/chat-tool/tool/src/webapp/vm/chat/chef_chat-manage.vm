@@ -1,0 +1,148 @@
+## $Header: /cvs/sakai2/legacy/tools/src/webapp/vm/chat/chef_chat-manage.vm,v 1.4 2005/05/25 17:42:01 gsilver.umich.edu Exp $
+## chef_chat-manage.vm, use with org.chefproject.ChatAction.java
+##     context: $panel-monitor: String list panel url addition
+##              $panel-control: String controls panel url addition
+##              $panel-presence: String presence panel url addition
+##              $panel: String name of panel parameter
+##
+<script type="text/javascript">
+function selectAll()
+{
+  var listSizeVal = 0;
+  if (document.getElementById("showListSize") != null || document.getElementById("showListSize") != undefined)
+  	listSizeVal = document.getElementById("showListSize").value;
+  	
+  var allcheckVal = false;
+  if (document.getElementById("allcheck")!= null || document.getElementById("allcheck") != undefined)
+  	allcheckVal = document.getElementById("allcheck").checked;
+    	    	  
+    for (i=1;i<=parseInt(listSizeVal);i++)
+    {	
+	     if ( document.getElementById("check-"+i) != null ||  document.getElementById("check-"+i) != undefined)
+	    {
+			  if (allcheckVal == true)
+			  	    document.getElementById("check-"+i).checked=true;	    
+			  else 	document.getElementById("check-"+i).checked=false;
+		} 	 
+	}
+}
+</script>
+<iframe
+	name="$validator.escapeJavascript("$panel-toolbar")"
+	id="$validator.escapeJavascript("$panel-toolbar")"
+	title="$panel-toolbar"
+	width="100%"
+style="line-height:1.7em;height:5em;margin-top:-1px"
+	frameborder="0"
+	marginwidth="0"
+	marginheight="0"
+	scrolling="no"
+	align="left"
+	src="#contentCourierLink("$panel-toolbar")">
+</iframe>
+<div class="portletBody" style="clear:both">
+	#if ($alertMessage)<div class="alertMessage">$tlang.getString("gen.alert") $validator.escapeHtml($alertMessage)</div><div class="clear"></div>#end
+		   <form id="chatManageForm" name="chatManageForm" action="#toolForm("ChatAction")" method="post">
+			<input type="hidden" id="showListSize" value="$numRooms" />
+			<input type="hidden" name="sakai_action" id="sakai_action" value="" />
+					<input type="hidden" id="checkOption2" value="false" />
+					
+              <div class="navIntraToolLink" >
+									<table cellspacing="3" cellpadding="3" summary="$tlang.getString('gen.tablecaptionsite')" width="100%" style="border: 1px solid #EAEAEA;border-collapse: collapse;">
+										<tr>
+										<td>
+											<table cellspacing="0" cellpadding="0" summary="$tlang.getString('gen.tablecaptionsite')" width="35%" border="0">
+												<tr>	
+																						
+												<td>	
+													<a href="#" class="toolUiLink" onclick="location='#toolLink("ChatAction" "doAddChat")';return false;" onkeypress="location='#toolLink("ChatAction" "doAddChat")';return false;" title ="$tlang.getString('gen.new')"> 
+														<img src="/sakai-chat-tool/images/document_add.gif" height="16" width="16" border="0"/> $tlang.getString('gen.new')</a>
+												</td>
+												<td>
+													<a href="#" class="toolUiLink" onclick="document.getElementById('sakai_action').value='doDeleteChat';document.chatManageForm.submit();" onkeypress="document.getElementById('sakai_action').value='doDeleteChat';document.chatManageForm.submit();" title ="$tlang.getString('gen.delete2')"> 
+														<img src="/sakai-chat-tool/images/delete.png" height="16" width="16" border="0"/> $tlang.getString('gen.delete2')</a>	
+												</td>
+												<td>
+												    <a href="#" class="toolUiLink" onclick="document.getElementById('sakai_action').value='doPublishChat';document.chatManageForm.submit();" onkeypress="document.getElementById('sakai_action').value='doPublishChat';document.chatManageForm.submit();" title ="$tlang.getString('gen.publish')"> 
+														<img src="/sakai-chat-tool/images/publish.png" height="16" width="16" border="0" /> $tlang.getString('gen.publish')</a>
+												</td>
+												<td>
+												    <a href="#" class="toolUiLink" onclick="document.getElementById('sakai_action').value='doUnpublishChat';document.chatManageForm.submit();" onkeypress="document.getElementById('sakai_action').value='doUnpublishChat';document.chatManageForm.submit();" title ="$tlang.getString('gen.unpublish')"> 
+														<img src="/sakai-chat-tool/images/publish_rmv.png" height="16" width="16" border="0"/> $tlang.getString('gen.unpublish')</a>
+												</td>
+																																
+												</tr>
+												</table>
+												<table id="reOrderChatItems" class="listHier lines sortTableClass" border="0" cellspacing="0" summary="$tlang.getString('gen.tablecaptionsite')">
+							                      <thead>
+								                  <tr>
+													<th class="attach" id="checkbox"><input type="checkbox" id="allcheck" onclick="javascript:selectAll()"/>										
+											      </th>
+							                      <th id ="publishStatus" class="attach"></th>
+								                  <th id ="subject">
+								                      #if (!$currentSortedBy.equals("id"))
+											            <a href="#" onclick="location='#toolLink("ChatAction" "doSortbyId")';return false;" onkeypress="location='#toolLink("ChatAction" "doSortbyId")';return false;" title ="$tlang.getString('gen.sortby')">$tlang.getString('gen.chatroom')</a>
+										              #else
+											            #if ($currentSortAsc.equals("true"))
+												          <a href="#" onclick="location='#toolLink("ChatAction" "doSortbyId")';return false;" onkeypress="location='#toolLink("ChatAction" "doSortbyId")';return false;" title ="$tlang.getString('gen.sortbyasc')">$tlang.getString('gen.chatroom') <img src = "#imageLink("sakai/sortascending.gif")" border="0" alt="$tlang.getString('gen.sortbyasc')" /></a>
+											            #else
+												          <a href="#" onclick="location='#toolLink("ChatAction" "doSortbyId")';return false;" onkeypress="location='#toolLink("ChatAction" "doSortbyId")';return false;"title ="$tlang.getString('gen.sortbydesc')">$tlang.getString('gen.chatroom') <img src = "#imageLink("sakai/sortdescending.gif")" border="0" alt="$tlang.getString('gen.sortbydesc')"/></a>
+											            #end
+										              #end
+								                  </th>
+									              <th>&nbsp;</th>	
+								                 </tr>
+							                     </thead>
+							                     <tbody>
+							                       #set ($rowCount=0)
+							                       #foreach ($channel in $chat_channels)
+							                         #set ($chat_props=$channel.getProperties())
+								                     #set ($rowCount =$rowCount + 1)
+								                     <tr>
+													   <td headers="checkbox" class="attach">
+												         <label for ="check-$rowCount" class="skip">$tlang.getString("gen.select")</label>
+												         <input title="$tlang.getString("gen.select")" type="checkbox" id="check-$rowCount" name="selectedMembers" value="$channel.getId()" />
+											           </td>
+											
+									                   <td headers="publishStatus" class="attach">
+									                     #if (!$chat_props.isEmpty() && $chat_props.getProperty("published"))
+									                       #if ($chat_props.getProperty("published").equals("1"))
+											                 <img src = "/sakai-chat-tool/images/publish.png" border="0" alt="$tlang.getString('gen.publishtag')"  title="$tlang.getString('gen.publishtag')"/>
+											               #else
+											                 <img src = "/sakai-chat-tool/images/forbidden.png" border="0" alt="$tlang.getString('gen.draft')" title="$tlang.getString('gen.draft')" />
+											               #end  	
+									                     #else
+									                       <img src = "/sakai-chat-tool/images/publish.png" border="0" alt="$tlang.getString('gen.publishtag')" title="$tlang.getString('gen.publishtag')" />
+									                     #end	        
+									                   </td>
+									                   <td headers="subject">
+									                     #if($!channel.ChatHeader && $!channel.ChatHeader.Access == $groupAccess)
+					                                       <img src = "/sakai-chat-tool/images/group.png" border="0" alt="$tlang.getString('gen.grouptag')"  title="$tlang.getString('gen.grouptag')"/>
+				                                         #else
+					                                       <img src = "/sakai-chat-tool/images/folder.png" border="0" alt="$tlang.getString('gen.sitetag')"  title="$tlang.getString('gen.sitetag')"/>
+				                                         #end
+									                     <a  href="#" class="toolUiLink" onclick="location='#toolLink($action "doEditChat")&channelid=$validator.escapeHtml("$channel.getId()")'; document.form.submit();" >$channel.getId()</a>
+									                     #if ($default_chat_channel.equals($channel.getId()))
+									                     $tlang.getString("manage.default")
+									                     #end
+										               </td>
+									                   
+									                   <td>
+										                <div id="itemId-$rowCount" class="hide">$channel.getId()</div>											
+										                <div id="reorderGrp-$rowCount" class="addDndImage"></div>		
+									                   </td>
+									                 </tr>  
+									               #end  
+							                      </tbody>
+						                       </table>
+										</td>										
+										</tr>
+									</table>
+									</div>	
+		<div id="saveReturnDnd" style="background: #EEEEEE;border: 0;margin: 5px 0 0 0;line-height: 4em;padding-left: 1em;"></div>
+
+		</form>							
+</div>
+#sakai_courier()
+
+

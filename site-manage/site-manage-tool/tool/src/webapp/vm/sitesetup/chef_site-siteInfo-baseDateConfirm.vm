@@ -1,0 +1,57 @@
+## Base date confirm
+<style type="text/css">
+    .maintableCollapseWithBorder {
+       border: 1px solid #bbb;
+       border-collapse: collapse;
+       }
+       
+       .maintableCollapseWithBorder tr, td, th{
+          border: 1px solid #bbb;
+       }
+        
+    
+    </style>
+ <script language="JavaScript" type="text/javascript">
+function submitform(id)
+	{
+		var theForm = document.getElementById(id);
+		if(theForm && theForm.onsubmit)
+		{
+			theForm.onsubmit();
+		}
+		if(theForm && theForm.submit)
+		{
+			theForm.submit();
+		}
+	}
+</script>	 
+<div class="portletBody">
+	<h3>
+		$tlang.getString("basedate.confirmtitle") 
+	</h3>
+	<form name="form" id="form" method="post" action="#toolForm($action)">
+	<table class="maintableCollapseWithBorder" cellpadding="4" cellspacing="0" summary="$tlang.getString("basedate.list.summary")">
+  <tr style="background: #EAEAEA;">
+				<th style="text-align: left;">$tlang.getString("basedate.list.toolname")</th>
+				<th style="text-align: left;">$tlang.getString("basedate.list.currentdates")</th>
+				<th style="text-align: left;">$tlang.getString("basedate.list.adjdates")</th>
+	  </tr>	
+	  #foreach ($dateRange in $adjDateRanges)
+	  <tr>
+	  <td>$dateRange.toolName</td><td>$dateRange.currentDateRange</td><td><font color="#084A87">$dateRange.adjDateRange</font></td>
+	  </tr>
+	  #end
+	</table>
+	<br>
+	$tlang.getString("basedate.confirm")
+	<input type="hidden" name="continue" value="53" />
+	<input type="hidden" name="back" value="53" />
+	<input type="hidden" name="template-index" value="56" />
+	<input type="hidden" name="$tlang.getString('basedate.currentbasedate')" id="currentBaseDate" value="$currentBaseDate" />
+	<input type="hidden" name="$tlang.getString('basedate.newbasedate')" id="newBaseDate" value="$newBaseDate" />		
+	<p class ="act">
+		<input type="button" accesskey="s" class="active" name="Continue" value="$tlang.getString('gen.continue')" onclick="javascript:document.getElementById('form').action='#toolLinkParam('$action' 'doBaseDate_update' 'option=save')';submitform('form');" />
+		<input type="submit" accesskey="x" name="eventSubmit_doCancel" value="$tlang.getString('gen.cancel')" />
+	</p>
+   </form>
+</div>

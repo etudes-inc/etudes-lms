@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+<project xmlns="http://maven.apache.org/POM/3.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://maven.apache.org/maven-v3_0_0.xsd">
+	<extend>../../master/project.xml</extend>
+  	<pomVersion>3</pomVersion>
+    <name>sakai-blogger-tool</name>
+    <artifactId>sakai-blogger-tool</artifactId>
+	<groupId>sakaiproject</groupId>
+	<currentVersion>${sakai.version}</currentVersion>
+   	<organization>
+        <name>Lancaster Centre for e-Science</name>
+        <url>http://e-science.lancs.ac.uk</url>
+   	</organization>
+   	<inceptionYear>2005</inceptionYear>
+
+   	<developers>
+        <developer> 
+            <name>Miguel Gonzalez Losa</name>
+            <email>m.gonzalez@lancaster.ac.uk</email>
+        </developer>
+        <developer>
+            <name>Adrian Fish</name>
+            <email>a.fish@lancaster.ac.uk</email>
+        </developer> 
+    </developers>
+
+	<properties>
+       <deploy.type>war</deploy.type>
+   	</properties>
+
+   	<dependencies>
+
+        <dependency>
+            <groupId>sakaiproject</groupId>
+            <artifactId>sakai</artifactId>
+            <version>${sakai.plugin.version}</version>
+            <type>plugin</type>
+        </dependency> 
+        
+		<dependency>
+        	<groupId>sakaiproject</groupId>
+           	<artifactId>sakai-blogger-api</artifactId>
+           	<version>${sakai.version}</version>
+           	<type>jar</type>        	
+            <properties>
+               <war.bundle>true</war.bundle>
+            </properties>            
+       	</dependency>
+
+		<dependency>
+        	<groupId>sakaiproject</groupId>
+           	<artifactId>sakai-blogger-api-impl</artifactId>
+           	<version>${sakai.version}</version>
+           	<type>jar</type>        	
+            <properties>
+               <war.bundle>true</war.bundle>
+            </properties>            
+       	</dependency>
+
+		<dependency>
+        	<groupId>sakaiproject</groupId>
+           	<artifactId>sakai-blogger-fileUpload</artifactId>
+			<version>${sakai.version}</version>           	
+           	<type>jar</type>
+           <properties>
+               <war.bundle>true</war.bundle>
+           </properties>           	
+       	</dependency>	       	
+      	
+        	
+		<dependency>
+        	<groupId>sakaiproject</groupId>
+           	<artifactId>sakai-blogger-jsf</artifactId>
+           	<version>${sakai.version}</version>
+           	<type>jar</type>     	
+           <properties>
+               <war.bundle>true</war.bundle>
+           </properties>           	
+       	</dependency>		
+       	   	
+
+   
+       	<dependency>
+           <groupId>sakaiproject</groupId>
+           <artifactId>sakai-tool-api</artifactId>
+           <version>${sakai.version}</version>
+           <type>jar</type>
+       	</dependency>		
+
+       	<dependency>
+           <groupId>sakaiproject</groupId>
+           <artifactId>sakai-util</artifactId>
+           <version>${sakai.version}</version>
+           <type>jar</type>
+           <properties>
+               <war.bundle>true</war.bundle>
+            </properties>            
+       	</dependency>
+       	
+		<dependency>
+        	<groupId>jsf</groupId>
+           	<artifactId>jsf-api</artifactId>
+           	<version>1.1.01</version>
+           	<type>jar</type>
+            <properties>
+               <war.bundle>true</war.bundle>
+            </properties>           	
+       	</dependency>		
+	        
+		<dependency>
+        	<groupId>jsf</groupId>
+           	<artifactId>jsf-impl</artifactId>
+           	<version>1.1.01</version>
+           	<type>jar</type>
+            <properties>
+               <war.bundle>true</war.bundle>
+            </properties>           	
+       	</dependency>		
+
+       	<dependency>
+           <groupId>sakaiproject</groupId>
+           <artifactId>sakai-component</artifactId>
+           <version>${sakai.version}</version>
+           <type>jar</type>
+           <properties>
+               <war.bundle>true</war.bundle>
+           </properties>           	
+       	</dependency>		
+
+		<dependency>
+        	<groupId>sakaiproject</groupId>
+           	<artifactId>sakai-jsf-app</artifactId>
+           	<version>${sakai.version}</version>
+           	<type>jar</type>
+           <properties>
+               <war.bundle>true</war.bundle>
+           </properties>           	
+       	</dependency>
+
+		<dependency>
+        	<groupId>sakaiproject</groupId>
+           	<artifactId>sakai-jsf-widgets</artifactId>
+           	<version>${sakai.version}</version>
+           	<type>jar</type>
+           <properties>
+               <war.bundle>true</war.bundle>
+           </properties>           	
+       	</dependency>	
+
+
+		<dependency>
+        	<groupId>sakaiproject</groupId>
+           	<artifactId>sakai-jsf-widgets-sun</artifactId>
+           	<version>${sakai.version}</version>
+           	<type>jar</type>
+           <properties>
+               <war.bundle>true</war.bundle>
+           </properties>           	
+       	</dependency>	
+
+
+
+		<dependency>
+        	<groupId>sakaiproject</groupId>
+           	<artifactId>sakai-jsf-widgets</artifactId>
+           	<version>${sakai.version}</version>
+           	<type>jar</type>
+           <properties>
+               <war.bundle>true</war.bundle>
+           </properties>           	
+       	</dependency>	
+
+		<dependency>
+        	<groupId>jstl</groupId>
+           	<artifactId>jstl</artifactId>
+           	<version>1.1.2</version>
+           	<type>jar</type>
+           <properties>
+               <war.bundle>true</war.bundle>
+           </properties>           	
+       	</dependency>		
+        	
+		<dependency>
+        	<groupId>taglibs</groupId>
+           	<artifactId>standard</artifactId>
+           	<version>1.1.2</version>
+           	<type>jar</type>
+           <properties>
+               <war.bundle>true</war.bundle>
+           </properties>           	
+       	</dependency>	
+       	
+		<dependency>
+        	<groupId>sakaiproject</groupId>
+           	<artifactId>sakai-jsf-tool</artifactId>
+           	<version>${sakai.version}</version>
+           	<type>jar</type>
+           <properties>
+               <war.bundle>true</war.bundle>
+           </properties>           	
+       	</dependency>	
+       	
+       	
+       	
+		<dependency>
+        	<groupId>xerces</groupId>
+           	<artifactId>xercesImpl</artifactId>
+           	<version>2.6.2</version>
+           	<type>jar</type>
+           <properties>
+               <war.bundle>true</war.bundle>
+           </properties>           	
+       	</dependency>		
+        	
+		<dependency>
+        	<groupId>commons-beanutils</groupId>
+           	<artifactId>commons-beanutils</artifactId>
+           	<version>1.7.0</version>
+           	<type>jar</type>
+           <properties>
+               <war.bundle>true</war.bundle>
+           </properties>            	
+       	</dependency>		
+        	
+		<dependency>
+        	<groupId>commons-digester</groupId>
+           	<artifactId>commons-digester</artifactId>
+           	<version>1.6</version>
+           	<type>jar</type>
+           <properties>
+               <war.bundle>true</war.bundle>
+           </properties>           	
+       	</dependency>		
+        	
+		<dependency>
+        	<groupId>commons-fileupload</groupId>
+           	<artifactId>commons-fileupload</artifactId>
+			<version>1.3.1</version>
+           	<type>jar</type>
+           <properties>
+               <war.bundle>true</war.bundle>
+           </properties>           	
+       	</dependency>	
+        	
+		<dependency>
+        	<groupId>myfaces</groupId>
+           	<artifactId>tomahawk</artifactId>
+           	<version>1.1.6</version>
+           	<type>jar</type>
+           <properties>
+               <war.bundle>true</war.bundle>
+           </properties>           	
+       	</dependency>		
+		
+		<dependency>
+        	<groupId>servletapi</groupId>
+           	<artifactId>servletapi</artifactId>
+           	<version>2.4</version>
+           	<type>jar</type>
+       	</dependency>	
+       	       	
+    </dependencies>
+    
+    <build>
+        <sourceDirectory>src/java</sourceDirectory>
+        <!-- other resources for the jar - the message bundles -->
+        <resources>
+            <resource>
+                <directory>${basedir}/src/bundle</directory>
+                <includes>
+                    <include>**/*.properties</include>
+                </includes>
+            </resource>
+        </resources>
+    </build>    
+</project>

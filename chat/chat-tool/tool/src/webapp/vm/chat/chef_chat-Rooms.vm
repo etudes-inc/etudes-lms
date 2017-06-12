@@ -1,0 +1,59 @@
+## $Header: /cvs/sakai2/legacy/tools/src/webapp/vm/chat/chef_chat-rooms.vm,v 1.3 2005/05/23 16:04:03 gsilver.umich.edu Exp $
+## chef_chat-rooms.vm, use with org.chefproject.ChatAction.java
+##     context: $chat_channel: String channel name
+##              $chat_ascending: Ascending flag
+##              $chat_channels: List of potential channel ids
+##              $chat_channel_form: form name for selected channel
+##				$new_chat_channel: 
+##              $chat_ascending_form: form name for ascending field
+##              $action: action= value
+##              $form-submit: submit button name
+##
+<div class="portletBody">
+	
+		<form name="roomsForm" action="#toolForm("$action")" method="post">
+		  #foreach ($channel_count in $channel_counts)
+		  #set($channelid=$channel_count.getChannel().getId())
+		  #set($usercount=$channel_count.getUserCount())
+		  #set ($chat_props=$channel_count.getChannel().getProperties())
+		  #if (!$chat_props.isEmpty() && $chat_props.getProperty("published"))
+		  #if ($chat_props.getProperty("published").equals("1"))
+		    #if($!channel_count.channel.ChatHeader && $!channel_count.channel.ChatHeader.Access == $groupAccess)
+			  <img src = "/sakai-chat-tool/images/group.png" border="0" alt="$tlang.getString('gen.grouptag')"  title="$tlang.getString('gen.grouptag')"/>
+		    #else
+			  <img src = "/sakai-chat-tool/images/folder.png" border="0" alt="$tlang.getString('gen.sitetag')"  title="$tlang.getString('gen.sitetag')"/>
+		    #end
+		   #else 
+		     <img src = "/sakai-chat-tool/images/forbidden.png" border="0" alt="$tlang.getString('gen.unpublishtag')"  title="$tlang.getString('gen.unpublishtag')"/>
+		   #end
+		  #else
+		    #if($!channel_count.channel.ChatHeader && $!channel_count.channel.ChatHeader.Access == $groupAccess)
+			  <img src = "/sakai-chat-tool/images/group.png" border="0" alt="$tlang.getString('gen.grouptag')"  title="$tlang.getString('gen.grouptag')"/>
+		    #else
+			  <img src = "/sakai-chat-tool/images/folder.png" border="0" alt="$tlang.getString('gen.sitetag')"  title="$tlang.getString('gen.sitetag')"/>
+		    #end
+		  #end  
+		  #if ($room_chat_channel.equals($channelid))
+		   <a  href="#" class="toolUiLink" style="background:#DDE3EB" onclick="location='#toolLink($action "doChangeRoom")&channelid=$validator.escapeHtml("$channelid")&channel=$validator.escapeHtml("$channelid")'; document.form.submit();" >				
+
+				#if($!channelid.equalsIgnoreCase("main"))
+			      $tlang.getString("lay.mainchat")
+			    #else
+			      $channelid
+			    #end
+			</a>
+		  #else
+		     <a  href="#" class="toolUiLink" onclick="location='#toolLink($action "doChangeRoom")&channelid=$validator.escapeHtml("$channelid")&channel=$validator.escapeHtml("$channelid")'; document.form.submit();" >				
+				#if($!channelid.equalsIgnoreCase("main"))
+			      $tlang.getString("lay.mainchat")
+			    #else
+			      $channelid
+			    #end</a>
+		  #end					
+				<br>			
+				$usercount&nbsp;$tlang.getString("rooms.users")
+				<br><br>
+		  #end
+		</form>	
+		
+</div>

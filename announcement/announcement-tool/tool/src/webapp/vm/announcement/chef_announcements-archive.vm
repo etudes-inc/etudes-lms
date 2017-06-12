@@ -1,0 +1,65 @@
+
+<div class="portletBody">
+<p class="shorttext">
+	<img src="/sakai-announcement-tool/images/warning.gif" height="16" width="16" style="border:0" alt=""  />
+		$tlang.getString("gen.archiving")
+</p>	
+	#if ($alertMessage)<div class="alertMessage">$tlang.getString("gen.alert") $validator.escapeHtml($alertMessage)</div>#end
+	<div class="alertMessage">$tlang.getString("gen.archsure")</div>
+	<form name="forNotLetDeleteSelectedOnLoad"></form>
+		<table class="listHier lines nolines" cellspacing="0">
+			<tr>
+				<th>$tlang.getString("gen.subject")</th>
+				<th>$tlang.getString("gen.from")</th>
+				<th>$tlang.getString("gen.date")</th>
+				<th>$tlang.getString("gen.visible")</th>
+			</tr>
+			#foreach ($archive_item in $archMessagesList)
+				<tr>
+					<td>
+						<h4>
+						#if ($archive_item.Header.draft)
+							<span class="highlight">$tlang.getString("gen.draft") - </span>
+						#end
+						$validator.escapeHtml($archive_item.Header.subject)
+						</h4>
+					</td>
+					<td>$validator.escapeHtml($archive_item.Header.From.DisplayName)</td>
+					<td>$archive_item.Header.Date.toStringLocalFull()</td>
+					<td>
+						#set($publicProperty = $archive_item.getProperties().getProperty("SAKAI:pubview"))
+						#if ($!publicProperty && $publicProperty.equals("true"))
+							$tlang.getString("gen.public")
+						#elseif ($archive_item.getAnnouncementHeader().getAccess().equals($!channelAccess))
+							$tlang.getString("range.allgroups")
+						#else
+							#set($count = 0)
+							#set($allGroupString="")
+							#foreach ($aGroupRef in $archive_item.getAnnouncementHeader().getGroups())
+								#set($aGroup=$!site.getGroup($aGroupRef))
+								#set($count=$count+1)
+								#if ($count > 1)
+									#set($allGroupString = $allGroupString.concat(", ").concat($aGroup.getTitle()))
+								#else
+									#set($allGroupString = $aGroup.getTitle())
+								#end
+							#end
+							$allGroupString
+						#end
+					</td>
+				</tr>
+			#end
+		</table>
+	<form name="archiveTemplateForm" action="#toolForm("AnnouncementAction")" method="post">
+		<p style="background: #EEEEEE;border: 0;margin: 5px 0 5px 0;line-height: 2em;padding-left: 1em;">
+			<input type="submit" accesskey="l" class="active" name="eventSubmit_doArchiveAnnouncement" 
+			style="padding-left:2em;background: #eee url('/sakai-announcement-tool/images/OK.png') .2em no-repeat;"
+			value="$tlang.getString("gen.ok")" title="$tlang.getString("gen.ok")[Accesskey + k]"/>
+			
+			<input type="submit" accesskey="x" 
+			style="padding-left:2em;background: #eee url('/sakai-announcement-tool/images/cancel.gif') .2em no-repeat;"
+			title="$tlang.getString("gen.cancel")[Accesskey + x]"
+			value="$tlang.getString("gen.cancel")" name="eventSubmit_doCancel" />
+		</p>
+	</form>
+</div>

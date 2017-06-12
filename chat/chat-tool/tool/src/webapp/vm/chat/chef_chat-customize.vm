@@ -1,0 +1,95 @@
+## $Header: /cvs/sakai2/legacy/tools/src/webapp/vm/chat/chef_chat-customize.vm,v 1.3 2005/05/23 16:04:03 gsilver.umich.edu Exp $
+## chef_chat-customize.vm, use with org.chefproject.ChatAction.java
+##     context: $chat_channel: String channel name
+##              $chat_ascending: Ascending flag
+##              $chat_channels: List of potential channel ids
+##              $chat_channel_form: form name for selected channel
+##				$new_chat_channel: 
+##              $chat_ascending_form: form name for ascending field
+##              $action: action= value
+##              $form-submit: submit button name
+##
+
+<div class="portletBody">
+		<h4 class="indnt1">
+			$tlang.getString("custom.chatopt")
+		</h4>
+		#if ($alertMessage)<div class="alertMessage">$tlang.getString("gen.alert") $validator.escapeHtml($alertMessage)</div><div class="clear"></div>#end
+		<form name="revise" id="revise" action="#toolForm("$action")" method="post">
+		
+		<p class="instruction indnt3">
+			$tlang.getString("custom.howmany")
+		</p>
+		<p class="checkbox indnt3">
+			<input 
+			type="radio" 
+			name="$filter_type_form" 
+			id="$validator.escapeHtml("${filter_type_form}-SelectAllMessages")" 
+			#if($filter_type == "SelectAllMessages")
+				checked="checked"
+			#end 
+			value="SelectAllMessages" />
+			<label for="${filter_type_form}-SelectAllMessages">
+				$tlang.getString("custom.showall")
+			</label>
+		</p>
+				<p class="checkbox indnt3">
+			<input 
+			type="radio" 
+			name="$filter_type_form" 
+			id="${filter_type_form}_SelectMessagesByNumber" 
+			#if($filter_type == "SelectMessagesByNumber") 
+				checked="checked"
+			#end
+			value="SelectMessagesByNumber" 
+
+			onclick="if(checked) document.getElementById('$filter_number_param_form').focus()"
+
+			/>
+			<label for="${filter_type_form}_SelectMessagesByNumber">
+				$tlang.getString("custom.showlast")
+			</label>
+			<input 
+			type="text" 
+			name="$filter_number_param_form" 
+			id="$filter_number_param_form" 
+			size="3" 
+			onclick="document.getElementById('${filter_type_form}_SelectMessagesByNumber').checked=true"
+			onchange="document.getElementById('${filter_type_form}_SelectMessagesByNumber').checked=true"
+			value="$!filter_number_param" />
+			<label for="$filter_number_param_form"> $tlang.getString("custom.mess")</label>
+		</p>	
+		<p class="checkbox indnt3">
+			<input 
+			type="radio" 
+			name="$filter_type_form" 
+			id="${filter_type_form}_SelectMessagesByTime" 
+			#if($filter_type == "SelectMessagesByTime") 
+				checked="checked"
+			#end 
+			value="SelectMessagesByTime"
+
+			onclick="if(checked) document.getElementById('$filter_days_param_form').focus()" />
+
+			<label for="${filter_type_form}_SelectMessagesByTime">
+				$tlang.getString("custom.showpast")
+			</label>
+
+			<input 
+			type="text" 
+			name="$filter_days_param_form" 
+			id="$filter_days_param_form" 
+			size="3" 
+			onclick="document.getElementById('${filter_type_form}_SelectMessagesByTime').checked=true"
+			onchange="document.getElementById('${filter_type_form}_SelectMessagesByTime').checked=true"
+			value="$!filter_days_param" />
+			<label for="$filter_days_param_form"> $tlang.getString("custom.days")</label>
+		</p>
+		<br>
+		<br>
+		<div class="act">
+			<input type="submit" class="active" name="$form-submit" style="padding-left:1.5em;background: #eee url('/sakai-chat-tool/images/save.png') .2em no-repeat;" value="$tlang.getString("gen.save")"  title="$tlang.getString("gen.save")[Accesskey + s]" accesskey="s" />
+			<input type="submit" name="$form-cancel" style="padding-left:1.5em;background: #eee url('/sakai-chat-tool/images/cancel.gif') .2em no-repeat;" value="$tlang.getString("gen.cancel")"  title="$tlang.getString("gen.cancel")[Accesskey + x]" accesskey="x" />
+		</div>
+	</form>
+</div>

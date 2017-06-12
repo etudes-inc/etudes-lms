@@ -1,0 +1,27 @@
+## $Header: /cvs/sakai2/legacy/tools/src/webapp/vm/chat/chef_chat-publishchannel.vm,v 1.1 2005/04/14 20:22:08 ggolden.umich.edu Exp $
+<div class="portletBody">
+	<h3>
+		$tlang.getString("grouppublishroom.publish")
+	</h3>
+	#if ($alertMessage)<div class="alertMessage">$tlang.getString("gen.alert") $validator.escapeHtml($alertMessage)</div>
+	<div class="clear"></div>#end
+	<div class="alertMessage" style="clear:both">$tlang.getString("grouppublishroom.sure")</div>
+	<div class="clear"></div>
+	<form name="publishChannelForm" action="#toolForm("$action")" method="post">
+	     		<p class="indnt1">
+					$validator.escapeHtmlFormattedText($group_channel)
+				</p>
+			
+		<p class="act">
+			<input type="submit" accesskey="p" class="active" name="eventSubmit_doPublishChannel" 
+			style="padding-left:2em;background: #eee url('/sakai-chat-tool/images/publish.png') .2em no-repeat;"
+			value="$tlang.getString("gen.publish")" title="$tlang.getString("gen.publish")[Accesskey + p]"/>
+			
+			<input type="submit" accesskey="x" 
+			style="padding-left:2em;background: #eee url('/sakai-chat-tool/images/cancel.gif') .2em no-repeat;"
+			title="$tlang.getString("gen.cancel")[Accesskey + x]"
+			value="$tlang.getString("gen.cancel")" name="eventSubmit_doCancelManage" />
+		</p>
+	</form>
+</div>
+

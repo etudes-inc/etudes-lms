@@ -1,0 +1,61 @@
+##<!-- $Header: /cvs/sakai2/legacy/tools/src/webapp/vm/prefs/chef_membership.vm,v 1.10 2005/05/28 03:04:36 ggolden.umich.edu Exp $ -->
+<div class="portletBody">
+	<div class="navIntraTool">
+	$tlang.getString("mb.cursit")
+	|
+	<a href="#toolLink("$action" "doGoto_joinable")" title="$tlang.getString('mb.joisit')">$tlang.getString('mb.joisit')</a>
+	</div>
+	
+	<h3>
+		$tlang.getString("mb.cursit") 
+	</h3>                                                                                           
+
+	#if ($alertMessage)<p class="information">$validator.escapeHtml($alertMessage)</p>#end
+	
+	#if ($unjoinableSites.size()>0)
+		
+		<p class="instruction">
+		$tlang.getString("mb.listunjoin")
+		</p>
+		
+		<form action="#toolForm("$action")" method="post">
+			<table class = "listHier lines" cellspacing="0" summary ="$tlang.getString('joinable.list.summary')">
+				<tr>
+					<th id="worksite">
+						<a href="#toolLink("$action" "doToggle_sort")" title ="$tlang.getString('list.sortbytitle')"> 
+							$tlang.getString("gen.worksite")
+							#if ($currentSortAsc) 
+								<img src = "#imageLink("sakai/sortascending.gif")" border="0" title ="$tlang.getString('list.stasc')" alt ="$tlang.getString('list.stasc')" /> 
+							#else 
+								<img src = "#imageLink("sakai/sortdescending.gif")" border="0" title ="$tlang.getString('list.stdesc')" alt ="$tlang.getString('list.stdesc')" /> 
+							#end
+						</a>
+					</th>
+					<th id="description">$tlang.getString("gen.description")</th>
+				</tr>
+				#foreach ($site in $unjoinableSites)
+					<tr>
+						<td headers="worksite" style="white-space:nowrap">
+							<h4><a href="$site.Url" target="_top" title="$tlang.getString('mb.gotosite') $validator.escapeHtml($site.Title)">$validator.escapeHtml($site.Title)</a></h4>
+							#if($disableUnjoinSelection)
+								<p class ="shorttext"></p>
+							#else		
+								#if ($SiteService.allowUnjoinSite($site.Id))
+									<div class="itemAction">
+										<a href="#toolLinkParam("$action" "doGoto_unjoinconfirm" "itemReference=$validator.escapeUrl($site.Id)")" title="$tlang.getString('mb.unjoinsite') $validator.escapeHtml($site.Title)">$tlang.getString('mb.unjoin')</a>
+									</div>	
+								#end
+							#end
+						</td>
+						<td headers="description">
+							$!validator.escapeHtml($!site.Description)
+						</td>
+					</tr>
+				#end
+			</table>
+		</form>
+	#else
+		<p class="instruction">$tlang.getString('mb.list.nomembs')</p>
+	#end
+</div>	
+

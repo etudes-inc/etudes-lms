@@ -1,0 +1,123 @@
+##<!-- $Header: /cvs/sakai2/legacy/tools/src/webapp/vm/sitesetup/chef_site-importSites.vm,v 1.3 2005/05/25 20:24:30 zqian.umich.edu Exp $ -->
+<div class="portletBody">
+	<h3>
+		$tlang.getString("import.reuse")
+	</h3>
+	<p class="instruction">
+	$tlang.getString("import.choose")
+	</p><p></p>
+	<form name="importSitesForm" action="#toolForm("$action")" method="post">
+		<table width="100%" class ="listHier lines nolines" cellspacing="0" summary="$tlang.getString("import.choose.list.summary")" border="0">
+			<tr>
+				<th style="width:20em;text-align:left;">
+					&nbsp;
+				</th>
+				#set ($siteCount=0)
+				#foreach($site in $importSites.keys())
+					#set ($siteCount=$siteCount + 1)
+					<th style="width:16px;text-align:center;">
+						$validator.escapeHtml($site.getTitle())
+					</th>
+				#end
+				<th></th>
+			</tr>
+			<tr>
+				<td style="width:20em;text-align:left;"></td>
+				#set ($siteCount=0)
+				#foreach($site in $importSites.keys())
+					#set ($siteCount=$siteCount + 1)
+					<td style="width:16px;text-align:center;white-space:nowrap">
+						<input type="checkbox" id="site${siteCount}" name="$siteCount" value="$siteCount" onclick="selectAll(this,${siteCount},${selectedToolsSize});" />
+						$tlang.getString("import.all")
+					</td>
+				#end
+				<td></td>
+			</tr>
+			#set ($toolCount=0)
+			#foreach($toolId in $selectedTools)
+			#set($selectedSites = $!importSitesTools.get($toolId))
+			#set ($toolCount=$toolCount + 1)
+			#set($toolTitle = "")
+				#if ($toolId.contains("groups"))
+					#set($toolTitle = "Site Info")
+				#end	
+				#if ($importSupportedTools.contains($toolId))					
+					#foreach($t in $toolRegistrationList)
+						#if ($t.getId() == $toolId)
+							#set($toolTitle = $t.getTitle())
+						#end
+					#end
+					<tr><td style="width:20em;text-align:left;">$toolTitle</td>
+						#set ($siteCount=0)
+						#foreach($site in $importSites.keys())
+						#set ($siteCount=$siteCount + 1)
+							<td style="width:16px;text-align:center;">
+								#set($toolFound = false)
+								#set($toolFnd = false)
+								#set($toolFnd = $site.hasTool($toolId))
+								#if ($!toolFnd)
+									#set($toolFound = true)
+								#end
+								#if ($toolId.contains("groups"))
+									<input type="checkbox" id="site${siteCount}tool${toolCount}" name="$toolId" value="$site.Id" onclick="updSelectAll(${siteCount},${selectedToolsSize});" />
+									<label  class="skip" for="site${siteCount}tool${toolCount}">$tlang.getString('import.choose.label1')  $toolTitle $tlang.getString('import.choose.label2') $validator.escapeHtml($site.getTitle())</label>
+								#else
+									#if ($toolFound)
+										<input type="checkbox" id="site${siteCount}tool${toolCount}" name="$toolId" value="$site.Id" onclick="updSelectAll(${siteCount},${selectedToolsSize});" />
+										<label  class="skip" for="site${siteCount}tool${toolCount}">$tlang.getString('import.choose.label1')  $toolTitle $tlang.getString('import.choose.label2') $validator.escapeHtml($site.getTitle())</label>
+									#else
+										<input type="checkbox" id="site${siteCount}tool${toolCount}"  name="$toolId" value="$site.Id" disabled="disabled" />
+									#end
+								#end
+							</td>
+						#end
+					<td></td></tr>
+				#end
+			#end
+		</table>
+		<input type="hidden" name="back" value="$back" />
+		<input type="hidden" name="template-index" value="27" />
+		<input type="hidden" name="continue" value="$continue" />
+		<input type="hidden" name="import_type" value="$import_type" />
+		<input type="hidden" name="import_archiveId" value="$archiveId" />
+		<p class="act" id="actPanel">
+			<input type="submit" accesskey="s" class="active" id="continueButton" name="eventSubmit_doContinue" value="$tlang.getString('gen.finish')" onclick="javascript:document.getElementById('processMsg').style.visibility='visible';document.getElementById('actPanel').style.visibility='hidden';" />
+			<input type="submit" accesskey="b" name="eventSubmit_doBack" value="$tlang.getString('gen.back')" />
+			<input type="submit" accesskey="x"  name="eventSubmit_doCancel" value="$tlang.getString('gen.cancel')" />
+		</p>
+		<div id="processMsg" style="visibility:hidden"><p style="color:orange;font-size:14px;font-weight:bold;">Processing....</p></div>
+	</form>
+</div>
+<script language="JavaScript">
+function selectAll(source, site, count)
+{
+  for (i=1; i <= count; i++)
+  {
+    var el = document.getElementById("site"+site+"tool"+i);
+    if (el != null)
+    {
+      if (!el.disabled) el.checked = source.checked;
+    }
+  }
+}
+function updSelectAll(site, count)
+{
+  var all = document.getElementById("site"+site);
+  if (all != null)
+  {
+    var allChecked = true;
+    for (i=1; i <= count; i++)
+    {
+      var el = document.getElementById("site"+site+"tool"+i);
+      if (el != null)
+      {
+        if (!el.disabled)
+        {
+          if (!el.checked) allChecked = false;
+        }
+      }
+    }
+    all.checked = allChecked;
+  }
+}
+</script>

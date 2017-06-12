@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+
+	<bean id="org.sakaiproject.site.api.CourseManagementService"
+			class="org.sakaiproject.site.impl.BasicCourseManagementService"
+			init-method="init"
+			destroy-method="destroy"
+			singleton="true">
+	</bean>
+	
+	<bean id="org.sakaiproject.site.api.DateManagerService"
+			class="org.sakaiproject.site.impl.DateManagerServiceImpl"
+			init-method="init"
+			destroy-method="destroy"
+			singleton="true">
+	 <property name="moduleService"><ref bean="org.etudes.api.app.melete.ModuleService"/></property>
+	 <property name="jforumBaseDateService"><ref bean="org.etudes.api.app.jforum.JForumBaseDateService"/></property>
+	 <property name="announcementService"><ref bean="org.sakaiproject.announcement.api.AnnouncementService"/></property>		
+	 <property name="calendarService"><ref bean="org.sakaiproject.calendar.api.CalendarService"/></property>		
+	 <property name="assessmentService"><ref bean="org.etudes.mneme.api.AssessmentService"/></property>
+	 <property name="pubDatesService"><ref bean="org.sakaiproject.site.api.PubDatesService"/></property>
+	 <property name="gradebookService"><ref bean="org_sakaiproject_service_gradebook_GradebookService" /></property>
+	 <property name="sqlService"><ref bean="org.sakaiproject.db.api.SqlService"/></property>
+	</bean>
+    <bean id="org.sakaiproject.site.impl.SitePublishImpl"
+			class="org.sakaiproject.site.impl.SitePublishImpl">
+		<property name="securityService"><ref bean="org.sakaiproject.authz.api.SecurityService"/></property>	
+		<property name="sessionManager"><ref bean="org.sakaiproject.tool.api.SessionManager"/></property>	
+		</bean>
+    <bean id="org.sakaiproject.site.impl.SiteUnpublishImpl"
+			class="org.sakaiproject.site.impl.SiteUnpublishImpl">
+		<property name="securityService"><ref bean="org.sakaiproject.authz.api.SecurityService"/></property>	
+		<property name="sessionManager"><ref bean="org.sakaiproject.tool.api.SessionManager"/></property>	
+    </bean> 
+    
+    <bean id="org.sakaiproject.site.api.PubDatesService"
+			class="org.sakaiproject.site.impl.PubDatesServiceImpl"
+			init-method="init"
+			destroy-method="destroy"
+			singleton="true">
+		<property name="securityService"><ref bean="org.sakaiproject.authz.api.SecurityService"/></property>	
+		<property name="sessionManager"><ref bean="org.sakaiproject.tool.api.SessionManager"/></property>		
+	</bean>		
+	
+	<bean id="org.sakaiproject.site.api.SpecialAccessToolService"
+			class="org.sakaiproject.site.impl.SpecialAccessToolServiceImpl"
+			init-method="init"
+			destroy-method="destroy"
+			singleton="true">
+	<property name="sqlService"><ref bean="org.sakaiproject.db.api.SqlService"/></property>
+	 <property name="moduleService"><ref bean="org.etudes.api.app.melete.ModuleService"/></property>
+	 <property name="jforumCategoryService"><ref bean="org.etudes.api.app.jforum.JForumCategoryService"/></property>
+	 <property name="jforumForumService"><ref bean="org.etudes.api.app.jforum.JForumForumService"/></property>
+	 <property name="jforumPostService"><ref bean="org.etudes.api.app.jforum.JForumPostService"/></property>
+	 <property name="jforumSpecialAccessService"><ref bean="org.etudes.api.app.jforum.JForumSpecialAccessService"/></property>
+	 <property name="jforumUserService"><ref bean="org.etudes.api.app.jforum.JForumUserService"/></property>
+	 <property name="assessmentService"><ref bean="org.etudes.mneme.api.AssessmentService"/></property>
+	 <property name="meleteSpecialAccessService"><ref bean="org.etudes.api.app.melete.SpecialAccessService"/></property>
+	</bean>
+
+</beans>

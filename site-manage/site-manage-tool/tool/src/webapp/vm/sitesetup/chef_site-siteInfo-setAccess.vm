@@ -1,0 +1,217 @@
+## Set Special Acces
+    <style type="text/css">
+
+.tablenoborder
+{
+border-style:none;
+}    
+ .confirmpanel1 
+{
+ position:relative;
+}      
+ .confirmpanel6
+{
+	position:absolute;
+	top:0px;
+	left:220px;
+	right:0;
+	width:450px; 
+	height:180px;
+	border-top:medium double black;
+	border-left:medium double black;
+	border-right:medium double black;
+	border-bottom:medium double black;
+	background:#FFFFCC;
+	overflow:auto;
+	padding:2px;
+}
+.deleteconfirmpanel
+{
+	position:absolute;
+	top:-20px;
+	left:70px;
+	right:0;
+	width:380px; 
+	height:80px;
+	border-top:medium double black;
+	border-left:medium double black;
+	border-right:medium double black;
+	border-bottom:medium double black;
+	background:#FFFFCC;
+	overflow:auto;
+	padding:2px;
+}
+.maintableCollapseWithBorder {
+       border: 0px;
+       border-collapse: collapse;
+       }
+       
+       .maintableCollapseWithBorder tr, td, th{
+          border: 0px;
+       }
+   </style>
+<script language="JavaScript" type="text/javascript">
+function submitform(id)
+	{
+		var theForm = document.getElementById(id);
+		if(theForm && theForm.onsubmit)
+		{
+			theForm.onsubmit();
+		}
+		if(theForm && theForm.submit)
+		{
+			theForm.submit();
+		}
+	}
+function showElement(id) 
+{
+	var ele = document.getElementById(id)
+	if (ele == null) return;
+
+	if (ele.style.display == 'none')
+	{
+		ele.style.display = 'block';
+	}
+}
+function hideElement(id) 
+{
+	var ele = document.getElementById(id)
+	if (ele == null) return;
+	
+	if (ele.style.display == 'block')
+		ele.style.display = 'none';
+}
+function checkTimeChoice(id)
+{
+  document.getElementById(id).checked = true;
+}
+</script>
+
+<div class="portletBody">
+#set($zdivindex=500)
+
+	<h3>
+		$tlang.getString("setaccess.access")
+	</h3>
+	#if ($alertMessage)<div class="alertMessage">$validator.escapeHtml($alertMessage)</div><div class="clear"></div><br>
+	#else
+	  #if ($toolsAccessMsg)
+	  <div class="alertMessage">$toolsAccessMsg</div>
+	  <br>
+	  #end
+	#end
+	<h3>
+	$tlang.getString("setaccess.accessfor") <B>$userName</B>
+	</h3>
+	<form name="form" id="form" method="post" action="#toolForm($action)">
+	<div style="margin:12px">
+   <div class="chefPageviewTitle">
+				$tlang.getString("setaccess.extenddays")
+			</div>
+		<p class="shorttext">	
+		<table class="maintableCollapseWithBorder" cellpadding="2" cellspacing="3">
+  <tr>
+	  <td>
+	  $tlang.getString('setaccess.days')
+	  </td>
+	  <td>
+			<input type="text" name="days" id="days" size="5" value="$days" />
+	  </td>
+	  </tr>
+	  </table>
+		</p>
+	   <div class="chefPageviewTitle">
+				$tlang.getString("setaccess.extendtime")
+			</div>
+	  <p class="shorttext">
+		<table class="maintableCollapseWithBorder" cellpadding="2" cellspacing="3">
+	  <tr>
+	  <td>
+	  	<input type="radio" name="timechoice" id="timelimitchoice" value="timelimitchoice" #if ($timechoice == "timelimitchoice")
+						checked="checked"
+					#end/>
+		<label for="timelimitchoice">$tlang.getString('setaccess.timelimit')</label>
+	  </td>
+	  <td>
+	  <input type="text" name="timelimit" id="timelimit" size="5" onclick="checkTimeChoice('timelimitchoice');return false;" value="$timelimit" />
+				<a href="#" onclick="showElement('accessinst');return false;"><input type="image" src="/sakai-site-manage-tool/images/test.png" alt=""  style="border:0"/>					
+	$tlang.getString("setaccess.instructions")</a>
+	#set($zdivindex=$zdivindex - 1)
+									<div class="confirmpanel1" style="z-index:$zdivindex">
+									
+									#set($zdivindex=$zdivindex - 1)
+									<div class="confirmpanel6" style="display:none;z-index:${zdivindex}" id="accessinst">
+									<table cellpadding="2" cellspacing="2" class="tablenoborder" width="100%">
+										<tr>
+											<td>
+												<span>
+												$tlang.getString('setaccess.timed-instructions')
+												</span>
+											</td>	
+											<td nowrap="nowrap" align="right" valign="top">
+												<a><img src="/sakai-site-manage-tool/images/delete.png" alt="Close" title="Close" onclick="hideElement('accessinst');return false;"></a>
+											</td>								
+										</tr>
+										<tr>
+											<td style="" colspan="2" align="left">
+												&nbsp;&nbsp;&nbsp;&nbsp;<input type="button" value="OK" accesskey="o" onclick="hideElement('accessinst');return false;" style="padding-left:2em; background: #eee url('/sakai-site-manage-tool/images/ok.png') .2em no-repeat;"/>
+											</td>
+										</tr>
+									</table>
+									</div>								
+									</div>
+	</td>
+	  </tr>
+	  <tr>
+	  <td>
+	  <input type="radio" name="timechoice" id="timemultchoice" value="timemultchoice" #if ($timechoice == "timemultchoice")
+						checked="checked"
+					#end/>
+		<label for="timemultchoice">$tlang.getString('setaccess.timemultiplier')</label>
+	  </td>
+	  <td>
+	  <input type="text" name="timemult" id="timemult" size="5" onclick="checkTimeChoice('timemultchoice');return false;" value="$timemult" />
+	  </table>
+     </p>
+	
+			<BR><BR>					
+		<input type="hidden" name="back" value="12" />
+		<input type="hidden" name="template-index" value="58" />
+		<input type="hidden" name="continue" value="12" />
+		<input type="hidden" name="userId" value="$userId" />
+		<input type="hidden" name="userName" value="$userName" />
+		<input type="hidden" name="accessexists" value="$accessexists" />
+	    <input type="button" accesskey="d" class="active" name="$tlang.getString('setaccess.done')" value="$tlang.getString('setaccess.done')" onclick="javascript:document.getElementById('form').action='#toolLinkParam('$action' 'doSetAccess_process' 'option=save')';submitform('form');" />
+		<input type="submit" accesskey="l" class="active" name="$tlang.getString('setaccess.delete')" onclick="showElement('deleteinst');return false;" value="$tlang.getString('setaccess.delete')" />
+		<input type="submit" accesskey="x" name="eventSubmit_doCancel" value="$tlang.getString("setaccess.can")" />
+					
+				#set($zdivindex=$zdivindex - 1)
+									
+				<div class="confirmpanel1" style="z-index:$zdivindex">
+						
+									#set($zdivindex=$zdivindex - 1)
+									<div class="deleteconfirmpanel" style="display:none;z-index:${zdivindex}" id="deleteinst">
+									<table cellpadding="2" cellspacing="2" class="tablenoborder" width="100%">
+										<tr>
+											<td colspan="2">
+												<span>
+												$tlang.getString('setaccess.deletemsg')
+												</span>
+												<BR><BR>
+											</td>								
+										</tr>
+										<tr>
+											<td style="" align="left">
+												&nbsp;&nbsp;&nbsp;&nbsp;<input type="button" value="Cancel" accesskey="x" onclick="hideElement('deleteinst');return false;" style="padding-left:2em; background: #eee url('/sakai-site-manage-tool/images/cancel.gif') .2em no-repeat;"/>
+											</td>
+											<td style="" align="left">
+												&nbsp;&nbsp;&nbsp;&nbsp;<input type="button" value="Delete" accesskey="o" onclick="javascript:document.getElementById('form').action='#toolLinkParam('$action' 'doSetAccess_process' 'option=delete')';submitform('form');" style="padding-left:2em; background: #eee url('/sakai-site-manage-tool/images/delete.png') .2em no-repeat;"/>
+											</td>
+										</tr>
+									</table>
+									</div>								
+									</div>
+									<BR><BR><BR><BR><BR><BR><BR><BR><BR>
+</div>		
+</form>
+</div>

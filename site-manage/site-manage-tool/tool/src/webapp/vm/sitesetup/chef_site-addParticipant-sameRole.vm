@@ -1,0 +1,64 @@
+##<!-- $Header: /cvs/sakai2/legacy/tools/src/webapp/vm/sitesetup/chef_site-addParticipant-sameRole.vm,v 1.1 2005/04/14 20:22:06 ggolden.umich.edu Exp $ -->
+## Add participants to the worksite with same role
+<div class ="portletBody">
+	<h3>
+		$tlang.getString("adddif.choose")
+	</h3>
+	#if ($alertMessage)
+		<div class="alertMessage">$tlang.getString("gen.alert") $validator.escapeHtml($alertMessage)</div>
+		<div class="clear"></div>
+	#end
+	<p class="instruction">
+		$tlang.getString("addsame.choose")	
+	</p>
+		<form action="#toolForm("SiteAction")" method="post">
+		<h4>
+			$tlang.getString("addsame.roles")
+		</h4>
+			#foreach ($role in $roles)
+				<p class="checkbox">
+					<input type="radio" name="selectRole" id="selectRole_$role.Id" value="$role.Id"
+						#if($form_selectedRole == $role.Id)
+							checked="checked"
+						#end
+						/>
+					<label for="selectRole_$role.Id">
+						$role.Id
+					</label>
+				</p>	
+				<p class="instruction indnt3">
+						#set($description = "")
+						#set($description = $role.Description)
+						$!description
+				</p>		
+			#end
+    	<h4>
+			$tlang.getString("addsame.participants")
+		</h4>	
+		<ul class="attachList indnt2">
+			#foreach ($participant in $participantList)
+				<li>
+					#set ($participantName=$participant.getName())
+					#if ($participantName ==", ") 	
+					#else
+						$participantName
+					#end
+					(#set($displayId=false)
+					#set($displayId = $participant.getDisplayId())
+					#if ($!displayId)
+						## for those internal users as Participant objects
+						$displayId
+					#end)
+				</li>
+			#end
+		</ul>	
+		<input type="hidden" name="continue" value="22" />
+		<input type="hidden" name="back" value="$backIndex" />
+		<input type="hidden" name="template-index" value="19" />
+		<p class ="act">
+			<input type="submit" accesskey="s" class="active" name="eventSubmit_doContinue" value="$tlang.getString('gen.continue')" />
+			<input type="submit" accesskey="b" name="eventSubmit_doBack" value="$tlang.getString('gen.back')" />
+			<input type="submit" accesskey="x" name="eventSubmit_doCancel" value="$tlang.getString('gen.cancel')" />
+		</p>
+	</form>
+</div>

@@ -1,0 +1,139 @@
+##<!-- $Header: /cvs/sakai2/legacy/tools/src/webapp/vm/sitesetup/chef_site-addParticipant.vm,v 1.2 2005/05/13 16:19:44 gsilver.umich.edu Exp $ -->
+## Add a participant to ssite
+<div class ="portletBody">
+	<h3>
+ 		$tlang.getString("add.addpart") $validator.escapeHtml($title)...
+	</h3>
+	#if ($alertMessage)
+		<div class="alertMessage">$tlang.getString("gen.alert") $validator.escapeHtml($alertMessage)</div>
+		<div class="clear"></div>
+	#end
+ 
+	<p class="instruction"> 
+		$tlang.getString("addconf.confirming1")
+	</p>
+	
+	<form action="#toolForm("SiteAction")" method="post">
+	
+		<table cellspacing="0" cellpadding="3" class ="listHier lines nolines" summary ="$tlang.getString("adddif.rolepicklist.summary")">
+			<tr>			
+				<th id="u_id">
+					$tlang.getString("addconf.user_id")
+				</th>
+				<th id="name">
+					$tlang.getString("addconf.fullname")
+				</th>
+				<th id="email">
+					$tlang.getString("addconf.email")
+				</th>
+			</tr>
+			#set ($selectIDCount=0)
+			#foreach ($participant in $participantList)
+				#set ($selectIDCount=$selectIDCount +  1)	
+				#set ($participantUniqName=$participant.getUniqname())
+				#if(!$selectList.contains($participantUniqName))					
+					<tr>
+						<td headers="u_id">
+							<label for="id$selectIDCount">$participant.getEid()</label>
+						</td>
+						<td headers="name">
+							<label for="role$selectIDCount">
+									#set ($participantName=$participant.getName())
+									#if ($participantName ==", ") 	
+									#else
+										$participantName
+									#end
+									(#set($displayId=false)
+									#set($displayId = $participant.getDisplayId())
+									#if ($!displayId)
+										## for those internal users as Participant objects
+										$displayId
+									#end)
+							</label>
+						</td>
+						<td headers="email">
+							<label for="email$selectIDCount">$participant.getEmail()</label>
+						</td>					
+					</tr>
+				#end
+			#end
+			
+			#foreach ($emailID in $multipleList.keySet())
+				#set ($selectIDCount=$selectIDCount +  1)
+				#set ($multiIDCount=0)
+				#set ($rowcount = $multipleList.get($emailID).size())
+					#if($existList.keySet().contains($emailID))
+						#set ($rowcount=$rowcount +  $existList.get($emailID).size())
+					#end	
+				<tr>
+					<td headers="u_id" style="vertical-align:top;" rowspan="$rowcount"> 
+						<label for="id$selectIDCount">$emailID</label>
+					</td>
+					
+					#foreach ($participant in $multipleList.get($emailID))
+					#set ($multiIDCount=$multiIDCount +  1)					
+					#if($multiIDCount==1)
+						<td headers="name">
+					#else 
+						<tr><td headers="name">
+					#end
+						 #set ($participantUniqName=$participant.getUniqname())
+							<input type="radio" name="selectUserfromList$emailID" value="$participantUniqName" #if($selectList.contains($participantUniqName)) checked="checked" #end />
+							<label for="role$emailID$multiIDCount">
+								#set ($participantName=$participant.getName())
+								#if ($participantName ==", ") 	
+								#else
+									$participantName
+								#end
+								(#set($displayId=false)
+								#set($displayId = $participant.getDisplayId())
+								#if ($!displayId)
+									## for those internal users as Participant objects
+									$displayId
+								#end)
+							</label>												
+						</td>
+						<td headers="email">
+							<label for="email$multiIDCount">$participant.getEmail()</label>
+						</td>
+					</tr>	
+					#end
+					#if($existList.keySet().contains($emailID))
+						#foreach ($participant in $existList.get($emailID))
+						#set ($multiIDCount=$multiIDCount +  1)
+						<tr>
+						<td headers="name">						
+							#set ($participantUniqName=$participant.getUniqname())							
+								<label for="role$emailID$multiIDCount">
+									#set ($participantName=$participant.getName())
+									#if ($participantName ==", ") 	
+									#else
+										$participantName
+									#end
+									(#set($displayId=false)
+									#set($displayId = $participant.getDisplayId())
+									#if ($!displayId)
+										## for those internal users as Participant objects
+										$displayId
+									#end)<span style="color:red"> $tlang.getString("addconf.existUser")</span>
+								</label>													
+							</td>
+							<td headers="email"> 
+								<label for="email$multiIDCount">$participant.getEmail()</label>
+							</td>
+						</tr>			
+						#end
+					#end 
+				
+			#end
+		</table>
+		
+		<input type="hidden" name="back" value="5" />
+		<input type="hidden" name="template-index" value="54" />
+		<div class ="act">
+			<input type="submit" accesskey="s" class="active" name="eventSubmit_doContinue" value="$tlang.getString('gen.continue')" />
+			<input type="submit" accesskey="b" name="eventSubmit_doBack" value="$tlang.getString('gen.back')" />
+			<input type="submit" accesskey="x" name="eventSubmit_doCancel" value="$tlang.getString('gen.cancel')" />
+		</div>
+	</form>
+</div>
