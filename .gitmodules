@@ -43,3 +43,6 @@
 [submodule "evalmanager"]
 	path = evalmanager
 	url = https://github.com/etudes-inc/etudes-evalmanager.git
+[submodule "gb"]
+	path = gb
+	url = https://github.com/etudes-inc/etudes-gradebook.git
