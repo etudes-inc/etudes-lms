@@ -16,3 +16,6 @@
 [submodule "cdp"]
 	path = cdp
 	url = https://github.com/etudes-inc/etudes-cdp.git
+[submodule "changepw"]
+	path = changepw
+	url = https://github.com/etudes-inc/etudes-changepw.git
