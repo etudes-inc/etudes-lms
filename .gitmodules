@@ -70,3 +70,6 @@
 [submodule "preferences"]
 	path = preferences
 	url = https://github.com/etudes-inc/etudes-preferences.git
+[submodule "resetpw"]
+	path = resetpw
+	url = https://github.com/etudes-inc/etudes-resetpw.git
