@@ -22,3 +22,6 @@
 [submodule "ckconnect"]
 	path = ckconnect
 	url = https://github.com/etudes-inc/etudes-ckconnect.git
+[submodule "configure"]
+	path = configure
+	url = https://github.com/etudes-inc/etudes-configure.git
