@@ -40,3 +40,6 @@
 [submodule "etudes-util"]
 	path = etudes-util
 	url = https://github.com/etudes-inc/etudes-util.git
+[submodule "evalmanager"]
+	path = evalmanager
+	url = https://github.com/etudes-inc/etudes-evalmanager.git
