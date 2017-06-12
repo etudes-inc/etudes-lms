@@ -19,3 +19,6 @@
 [submodule "changepw"]
 	path = changepw
 	url = https://github.com/etudes-inc/etudes-changepw.git
+[submodule "ckconnect"]
+	path = ckconnect
+	url = https://github.com/etudes-inc/etudes-ckconnect.git
