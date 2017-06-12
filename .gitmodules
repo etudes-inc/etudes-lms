@@ -13,3 +13,6 @@
 [submodule "archives"]
 	path = archives
 	url = https://github.com/etudes-inc/etudes-archives.git
+[submodule "cdp"]
+	path = cdp
+	url = https://github.com/etudes-inc/etudes-cdp.git
