@@ -61,3 +61,6 @@
 [submodule "melete"]
 	path = melete
 	url = https://github.com/etudes-inc/etudes-melete.git
+[submodule "mneme"]
+	path = mneme
+	url = https://github.com/etudes-inc/etudes-mneme.git
