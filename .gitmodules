@@ -28,3 +28,6 @@
 [submodule "coursemap"]
 	path = coursemap
 	url = https://github.com/etudes-inc/etudes-coursemap.git
+[submodule "dashboard"]
+	path = dashboard
+	url = https://github.com/etudes-inc/etudes-dashboard.git
