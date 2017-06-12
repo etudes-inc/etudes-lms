@@ -25,3 +25,6 @@
 [submodule "configure"]
 	path = configure
 	url = https://github.com/etudes-inc/etudes-configure.git
+[submodule "coursemap"]
+	path = coursemap
+	url = https://github.com/etudes-inc/etudes-coursemap.git
