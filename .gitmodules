@@ -79,3 +79,6 @@
 [submodule "sitebrowser"]
 	path = sitebrowser
 	url = https://github.com/etudes-inc/etudes-sitebrowser.git
+[submodule "siteimport"]
+	path = siteimport
+	url = https://github.com/etudes-inc/etudes-siteimport.git
