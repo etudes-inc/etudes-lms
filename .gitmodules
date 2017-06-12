@@ -49,3 +49,6 @@
 [submodule "homepage"]
 	path = homepage
 	url = https://github.com/etudes-inc/etudes-homepage.git
+[submodule "jforum"]
+	path = jforum
+	url = https://github.com/etudes-inc/etudes-jforum.git
