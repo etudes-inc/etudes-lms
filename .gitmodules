@@ -76,3 +76,6 @@
 [submodule "roster"]
 	path = roster
 	url = https://github.com/etudes-inc/etudes-roster.git
+[submodule "sitebrowser"]
+	path = sitebrowser
+	url = https://github.com/etudes-inc/etudes-sitebrowser.git
