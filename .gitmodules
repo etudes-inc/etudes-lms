@@ -88,3 +88,6 @@
 [submodule "syllabus"]
 	path = syllabus
 	url = https://github.com/etudes-inc/etudes-syllabus.git
+[submodule "docs"]
+	path = docs
+	url = https://github.com/etudes-inc/etudes-docs.git
