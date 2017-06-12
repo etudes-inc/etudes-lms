@@ -31,3 +31,6 @@
 [submodule "dashboard"]
 	path = dashboard
 	url = https://github.com/etudes-inc/etudes-dashboard.git
+[submodule "e3"]
+	path = e3
+	url = https://github.com/etudes-inc/etudes-e3.git
