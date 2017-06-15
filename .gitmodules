@@ -91,3 +91,6 @@
 [submodule "docs"]
 	path = docs
 	url = https://github.com/etudes-inc/etudes-docs.git
+[submodule "siteresources"]
+	path = siteresources
+	url = https://github.com/etudes-inc/etudes-siteresources.git
