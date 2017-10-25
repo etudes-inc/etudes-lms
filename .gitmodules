@@ -91,3 +91,6 @@
 [submodule "jforum"]
 	path = jforum
 	url = https://github.com/etudes-inc/etudes-jforum
+[submodule "roster"]
+	path = roster
+	url = https://github.com/etudes-inc/etudes-roster.git	
